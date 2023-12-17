@@ -1,0 +1,144 @@
+/* reset */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* root variables */
+
+:root {
+  --color-primary: #ff5722;
+  --color-secondary-light: #ffa589;
+  --color-secondary-dark: #ff7a50;
+  --color-navbar: #f8f8f8;
+  --color-heading: #000;
+  --color-body: #333;
+  --color-white: #fff;
+}
+html {
+  font-size: 62.5%;
+}
+body {
+  color: var(--color-body);
+  font-size: 1.4rem;
+}
+
+h1,
+h2,
+h3 {
+  color: var(--color-heading);
+  font-weight: 700;
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+
+h2 {
+  font-size: 2.2rem;
+}
+
+@media screen and (min-width: 1024px) {
+  body {
+    font-size: 1.8rem;
+  }
+  h1 {
+    font-size: 5rem;
+  }
+  h2 {
+    font-size: 3.5rem;
+  }
+}
+
+/* buttons */
+
+.btn {
+  outline: 0;
+  border: 0;
+  border-radius: 8px;
+  padding: 2rem 2.5rem;
+
+  white-space: nowrap;
+  font-size: 1.4rem;
+}
+
+.btn--primary {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+.btn--secondary {
+  background-color: var(--color-secondary-light);
+  color: var(--color-white);
+}
+
+.btn--block {
+  width: 100%;
+  font-size: 1.6rem;
+}
+
+@media screen and (min-width: 1024px) {
+  .btn {
+    font-size: 1.5rem;
+  }
+  .btn--block {
+    font-size: 2rem;
+  }
+}
+
+/* Badge */
+
+.badge {
+  display: inline-block;
+  font-size: 1.2rem;
+  background-color: var(--color-white);
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
+  border-radius: 32px;
+  padding: 0.5rem 1rem;
+  text-transform: uppercase;
+}
+
+.badge--primary {
+  color: var(--color-white);
+  background-color: var(--color-primary);
+}
+
+@media screen and (min-width: 1024px) {
+  .badge {
+    font-size: 1.4rem;
+  }
+}
+
+/* list */
+
+.list {
+  list-style: none;
+  font-size: 1.6rem;
+}
+
+.list--inline .list__item {
+  display: inline-block;
+  margin-left: 2rem;
+}
+
+.list--tick .list__item {
+  background: url("/assets/images/Tick-Square.svg") no-repeat right center;
+  padding-right: 3rem;
+}
+
+.list--tick .list__item {
+  background-color: violet;
+  margin-bottom: 1.5rem;
+}
+
+@media screen and (min-width: 1024px) {
+  .list--tick .list__item {
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+  }
+}
