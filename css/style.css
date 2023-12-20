@@ -12,8 +12,9 @@
 
 :root {
   --color-primary: #ff5722;
-  --color-secondary-light: #ffa589;
-  --color-secondary-dark: #ff7a50;
+  --color-primary-light: #ff7a50;
+  --color-secondary-light: #fff6f2;
+  --color-secondary-dark: #ffa589;
   --color-navbar: #f8f8f8;
   --color-heading: #000;
   --color-body: #333;
@@ -118,7 +119,7 @@ h2 {
 
 .list {
   list-style: none;
-  font-size: 1.6rem;
+  font-size: 1.8rem;
 }
 
 .list--inline .list__item {
@@ -132,7 +133,6 @@ h2 {
 }
 
 .list--tick .list__item {
-  background-color: violet;
   margin-bottom: 1.5rem;
 }
 
@@ -141,4 +141,79 @@ h2 {
     font-size: 1.8rem;
     margin-bottom: 2rem;
   }
+}
+
+/* plan */
+
+.block-plan {
+  display: grid;
+  gap: 8rem 6rem;
+  justify-content: center;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 320px));
+  margin-top: 5rem;
+}
+
+.plan {
+  max-width: 350px;
+  transition: all 0.2s ease-in;
+}
+
+.card {
+  overflow: hidden;
+  border-radius: 20px;
+  box-shadow: 0 0 20px 10px #eee;
+}
+.card__header,
+.card__body {
+  padding: 3rem 2.5rem;
+}
+.card__header {
+  color: var(--color-white);
+  font-size: 1.8rem;
+}
+.card--primary .card__header {
+  background-color: var(--color-primary-light);
+}
+.card--secondary .card__header {
+  background-color: var(--color-secondary-dark);
+}
+.plan__introduction {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+.plan__price {
+  font-size: 3rem;
+}
+.plan__billing-cycle {
+  font-size: 1.4rem;
+}
+.plan__description {
+  display: block;
+  margin-top: 1.5rem;
+}
+.plan .btn--block {
+  margin-top: 10rem;
+  font-size: 1.6rem;
+}
+.plan--popular {
+  transform: scale(1.05);
+}
+.plan.plan--popular:hover {
+  transform: scale(1.09);
+}
+.plan:hover {
+  transform: scale(1.03);
+}
+@media screen and (min-width: 1024px) {
+  .plan .btn--block {
+    font-size: 1.8rem;
+  }
+}
+
+/* container */
+
+.container {
+  max-width: 1140px;
+  margin: 0 auto;
 }
