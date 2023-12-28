@@ -218,8 +218,17 @@ h2 {
 /* container */
 
 .container {
-  max-width: 1140px;
+  display: grid;
+  grid-template-columns: 1fr;
+  max-width: 85vw;
   margin: 0 auto;
+}
+
+@media screen and (min-width: 1024px) {
+  .container {
+    /* margin: 0; */
+    max-width: 1140px;
+  }
 }
 
 /* feature */
@@ -359,8 +368,6 @@ h2 {
 
 /* social icons */
 
-.contact-us__social .icon-container {
-}
 .contact-us__social {
   display: flex;
   align-items: center;
@@ -442,5 +449,109 @@ textarea {
 @media screen and (min-width: 1024px) {
   .form-wrapper {
     padding: 5.2rem;
+  }
+}
+
+/* footer */
+.main-footer {
+  background-color: #000;
+  color: #fff;
+  padding: 5% 10%;
+  display: flex;
+  align-items: center;
+  line-height: 3rem;
+  justify-content: space-between;
+}
+.main-footer .footer {
+  display: flex;
+  flex-direction: column;
+}
+.brand-col,
+.footer__item {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: stretch;
+  margin-bottom: 2.5rem;
+  flex-wrap: nowrap;
+}
+.footer__item {
+  white-space: nowrap;
+}
+.footer__item a {
+  text-decoration: none;
+  font-size: 1.4rem;
+  color: #fff;
+  display: block;
+}
+.footer__item a:hover {
+  color: var(--color-primary);
+}
+.footer__item h6 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+.footer__trust {
+  display: flex;
+  flex-direction: row;
+  max-width: 300px;
+}
+.footer__enemad {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 1rem 0.5rem;
+  max-width: 85px;
+}
+.footer__enemad:not(:last-child) {
+  margin-left: 1rem;
+}
+
+.footer__enemad img {
+  width: 100%;
+  height: auto;
+}
+.footer-logo {
+  height: 30px;
+  margin-bottom: 10px;
+}
+.brand-col,
+.footer-col {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  margin-left: 20px;
+}
+.brand-col h3 {
+  color: #fff;
+  font-size: 1.2rem;
+}
+.copy-right {
+  color: #acacac;
+  font-size: 1.2rem;
+}
+@media screen and (min-width: 768px) {
+  .main-footer .footer {
+    display: flex;
+    flex-direction: row;
+  }
+  .footer__item {
+    margin-bottom: 0;
+    margin-left: 2rem;
+  }
+  .footer__enemad.one {
+    flex-shrink: 3;
+  }
+  .footer__enemad.two {
+    flex-shrink: 3;
+  }
+  .footer__enemad.three {
+    flex-shrink: 1;
+  }
+  .footer__enemad {
+    max-width: fit-content;
   }
 }
