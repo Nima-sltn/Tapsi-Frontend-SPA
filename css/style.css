@@ -61,12 +61,13 @@ h2 {
 /* buttons */
 
 .btn {
+  cursor: pointer;
   outline: 0;
   border: 0;
-  border-radius: 8px;
   padding: 2rem 2.5rem;
-  margin-bottom: 1rem;
-
+  border-radius: 8px;
+  margin: 1rem 0;
+  text-align: center;
   white-space: nowrap;
   font-size: 1.4rem;
 }
@@ -220,7 +221,7 @@ h2 {
 .container {
   display: grid;
   grid-template-columns: 1fr;
-  max-width: 85vw;
+  max-width: 1140px;
   margin: 0 auto;
 }
 
@@ -554,4 +555,101 @@ textarea {
   .footer__enemad {
     max-width: fit-content;
   }
+}
+
+/* navbar */
+
+.main-header {
+  background-color: var(--color-navbar);
+}
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 1rem 2rem;
+}
+.nav__list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  font-size: 1.4rem;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: all 0.3s linear;
+}
+.nav.nav__expanded .nav__list {
+  max-height: 100vh;
+  opacity: 1;
+}
+.nav__item {
+  /* margin-bottom: 0.5rem 0; */
+  border-bottom: 1px solid #ddd;
+}
+.nav__item > a {
+  text-decoration: none;
+  color: #444;
+  padding: 0.5rem 0;
+  display: block;
+}
+.nav__item > a:hover {
+  color: var(--color-primary);
+}
+.nav__item.cta {
+  font-style: 1.4rem;
+  border: 0;
+}
+.nav__item.cta > a {
+  color: #fff;
+  font-size: 1.4rem;
+}
+.nav__item .btn {
+  padding: 1rem 3rem;
+}
+@media screen and (min-width: 768px) {
+  .nav {
+    padding: 0 2rem;
+  }
+  .nav__toggler {
+    display: none;
+  }
+  .nav__list {
+    flex-direction: row;
+    width: auto;
+    align-items: center;
+    opacity: 1;
+    max-height: 100%;
+  }
+  .nav__item {
+    margin-right: 2rem;
+    margin-bottom: 0;
+    font-size: 1.6rem;
+    border: 0;
+  }
+}
+
+/* Toggler */
+
+.nav__toggler {
+  cursor: pointer;
+}
+.bar {
+  width: 25px;
+  height: 3px;
+  background-color: #000;
+  margin: 5px 0;
+  border-radius: 5px;
+  transition: all 0.2s linear;
+}
+.nav.nav__expanded .bar-one {
+  transform: rotate(-45deg) translate(-8px, 6px);
+  margin: 8px 0;
+}
+.nav.nav__expanded .bar-two {
+  opacity: 0;
+}
+.nav.nav__expanded .bar-three {
+  transform: rotate(45deg) translate(-9px, -8px);
+  margin: 8px 0;
 }
