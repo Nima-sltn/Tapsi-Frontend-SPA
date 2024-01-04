@@ -162,7 +162,11 @@ h2 {
   max-width: 350px;
   transition: all 0.2s ease-in;
 }
-
+.block__heading {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
 .card {
   overflow: hidden;
   border-radius: 20px;
@@ -198,7 +202,7 @@ h2 {
   margin-top: 1.5rem;
 }
 .plan .btn--block {
-  margin-top: 10rem;
+  margin-top: 5rem;
   font-size: 1.6rem;
 }
 .plan--popular {
@@ -214,13 +218,16 @@ h2 {
   .plan .btn--block {
     font-size: 1.8rem;
   }
+  .block__heading {
+    margin-bottom: 5rem;
+  }
 }
 
 /* container */
 
 .container {
   display: grid;
-  grid-template-columns: 1fr;
+  /* grid-template-columns: 1fr; */
   max-width: 1140px;
   margin: 0 auto;
 }
@@ -236,10 +243,13 @@ h2 {
 
 .feature {
   display: grid;
+  padding: 2rem;
+  gap: 0 8rem;
 }
 
 .feature__text {
   margin-bottom: 2rem;
+  text-align: justify;
 }
 
 .feature .btn {
@@ -247,7 +257,7 @@ h2 {
 }
 
 .feature__image > img {
-  width: 70%;
+  width: 100%;
   height: auto;
 }
 
@@ -259,6 +269,12 @@ h2 {
 @media screen and (min-width: 1024px) {
   .feature {
     grid-template-columns: repeat(2, 1fr);
+  }
+  .charge .feature__image {
+    order: 1;
+  }
+  .feature__title {
+    margin-bottom: 2rem;
   }
   .feature__image {
     order: 2;
@@ -560,7 +576,12 @@ textarea {
 /* navbar */
 
 .main-header {
+  width: 100%;
   background-color: var(--color-navbar);
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  border-bottom: 1px solid #ddd;
 }
 .nav {
   display: flex;
@@ -584,7 +605,6 @@ textarea {
   opacity: 1;
 }
 .nav__item {
-  /* margin-bottom: 0.5rem 0; */
   border-bottom: 1px solid #ddd;
 }
 .nav__item > a {
@@ -609,7 +629,7 @@ textarea {
 }
 @media screen and (min-width: 768px) {
   .nav {
-    padding: 0 2rem;
+    padding: 0 10%;
   }
   .nav__toggler {
     display: none;
@@ -657,10 +677,11 @@ textarea {
 /* hero section */
 
 .hero-section {
+  position: relative;
   width: 100%;
   height: 478px;
 }
-.hero-section img {
+.hero-section .banner-img {
   width: 100%;
   height: auto;
 }
@@ -676,7 +697,6 @@ textarea {
 }
 
 .intro-btn {
-  top: 0;
   border-radius: 20px;
   padding: 16px;
   background-image: linear-gradient(
@@ -686,16 +706,17 @@ textarea {
   );
   display: flex;
   flex-direction: column;
-  width: 270px;
+  max-width: 300px;
 }
 .intro-btn h1 {
   font-size: 2.5rem;
   color: #fff;
+  margin-top: 0;
 }
 .intro-btn h2 {
   font-size: 1.6rem;
   color: #fff;
-  margin-bottom: 3rem;
+  margin-bottom: 2.5rem;
 }
 .intro-btn__passenger {
   border-radius: 12px;
@@ -710,30 +731,58 @@ textarea {
   flex-wrap: wrap;
 }
 .intro-btn__passenger {
+  cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-around;
 }
 .intro-btn__passenger p {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
+}
+.intro-btn__passenger > i {
+  color: #000;
+}
+.intro-btn__passenger.driver-intro {
+  border: 2px solid #fff;
+  background-color: rgba(23, 26, 60, 0.5) !important;
+  color: #fff;
+}
+.banner-phone {
+  display: none;
+  position: absolute;
+  left: 10%;
+  bottom: -50%;
+  height: auto;
+  width: 420px;
 }
 @media screen and (min-width: 768px) {
   .hero-wrapper {
     justify-content: flex-start;
+    right: 0;
   }
   .intro-wrapper {
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
   }
   .intro-btn {
-    width: 530px;
+    width: 500px;
+    max-width: 500px;
+    padding: 0 25px;
+    border-radius: 20px;
   }
   .intro-btn h1 {
     font-size: 5rem;
   }
   .intro-btn h2 {
-    font-size: 2.5rem;
+    font-size: 2.4rem;
+    font-weight: 400;
+  }
+  .intro-btn__passenger p {
+    font-size: 1.6rem;
+  }
+  .banner-phone {
+    display: block;
   }
 }
 
@@ -784,13 +833,11 @@ textarea {
 .tab-content {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  display: none;
+  border-bottom: 1px solid #ddd;
 }
 .feature__detail {
   width: 100%;
-}
-.tab-content {
-  display: none;
 }
 .tab-content.active {
   display: flex;
@@ -803,6 +850,9 @@ textarea {
     margin-top: 1.5rem;
     font-size: 1.4rem;
   }
+  .tab-content {
+    margin-top: 2rem;
+  }
   .services__tabs img {
     width: 100%;
   }
@@ -813,16 +863,21 @@ textarea {
   .services .feature__image {
     display: block;
   }
-  .feature__detail {
+  .tab-content .feature__detail {
     width: 50%;
   }
-  .feature__image {
+  .tab-content .feature__image {
     width: 45%;
-  }
-  .feature__image img {
-    width: 100%;
   }
 }
 .block {
-  padding: 6rem 2rem;
+  padding: 4rem 2rem;
+}
+@media screen and (min-width: 768px) {
+  .block {
+    padding: 6rem 2rem;
+  }
+}
+.block-heading {
+  margin-top: 13rem;
 }
