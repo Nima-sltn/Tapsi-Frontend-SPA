@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="./css/style.css" />
     <link rel="stylesheet" href="./css/fonts.css" />
     <link rel="shortcut icon" href="#" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -244,7 +245,11 @@
         </div>
       </div>
     </section>
-    <section class="feature container block">
+    <section
+      class="feature container block"
+      data-aos="fade-left"
+      data-aos-duration="500"
+    >
       <div class="feature__image">
         <img src="assets/images/i-mac-1.png" alt="" />
       </div>
@@ -259,7 +264,11 @@
         <button class="btn btn--primary">ورود و ثبت نام پنل سازمانی</button>
       </div>
     </section>
-    <section class="feature container block charge">
+    <section
+      class="feature container block charge"
+      data-aos="fade-right"
+      data-aos-duration="500"
+    >
       <div class="feature__image">
         <img src="assets/images/macbook.webp" alt="" />
       </div>
@@ -417,6 +426,82 @@
         </div>
       </div>
     </section>
+    <h2 class="block__heading">جوایز ویژه</h2>
+    <section class="container block">
+      <div class="travel">
+        <div class="travel__slides">
+          <div class="travel__slide">
+            <div class="slide__img">
+              <img src="assets/images/travell.png" alt="" />
+            </div>
+            <div class="slide__detail">
+              <div class="slide__header">
+                <span class="badge badge--primary">ویژه</span>
+                <p>اقامت رایگان &bull; سفر سه روزه</p>
+              </div>
+              <p class="slide__title">سفر به قلب کویر</p>
+              <div class="slide__icons">
+                <div class="">
+                  <i class="fas fa-heart"></i>
+                  <span>12</span>
+                  <i class="far fa-eye"></i>
+                  <span>14</span>
+                </div>
+                <div class="">
+                  <i class="far fa-edit"></i> <i class="far fa-trash-alt"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="travel__slide">
+            <div class="slide__img">
+              <img src="assets/images/travell.png" alt="" />
+            </div>
+            <div class="slide__detail">
+              <div class="slide__header">
+                <span class="badge badge--primary">ویژه</span>
+                <p>اقامت رایگان &bull; سفر سه روزه</p>
+              </div>
+              <p class="slide__title">سفر به قلب کویر</p>
+              <div class="slide__icons">
+                <div class="">
+                  <i class="fas fa-heart"></i>
+                  <span>12</span>
+                  <i class="far fa-eye"></i>
+                  <span>14</span>
+                </div>
+                <div class="">
+                  <i class="far fa-edit"></i> <i class="far fa-trash-alt"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="travel__slide">
+            <div class="slide__img">
+              <img src="assets/images/travell.png" alt="" />
+            </div>
+            <div class="slide__detail">
+              <div class="slide__header">
+                <span class="badge badge--primary">ویژه</span>
+                <p>اقامت رایگان &bull; سفر سه روزه</p>
+              </div>
+              <p class="slide__title">سفر به قلب کویر</p>
+              <div class="slide__icons">
+                <div class="">
+                  <i class="fas fa-heart"></i>
+                  <span>12</span>
+                  <i class="far fa-eye"></i>
+                  <span>14</span>
+                </div>
+                <div class="">
+                  <i class="far fa-edit"></i> <i class="far fa-trash-alt"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
     <footer class="main-footer">
       <div class="container footer">
         <div class="brand-col">
@@ -477,5 +562,9 @@
     </footer>
 
     <script src="js/main.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      AOS.init();
+    </script>
   </body>
 </html>

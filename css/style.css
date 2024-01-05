@@ -881,3 +881,63 @@ textarea {
 .block-heading {
   margin-top: 13rem;
 }
+
+/* travel section */
+
+.travel__slides {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  overflow-x: auto;
+  padding-bottom: 1rem;
+}
+.travel__slide {
+  flex: 0 0 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.travel__slide:not(:last-child) {
+  margin-left: 2rem;
+}
+.travel__slide img {
+  width: 100%;
+  height: auto;
+  border-radius: 32px;
+}
+.slide__detail {
+  background-color: #fff;
+  box-shadow: 0 13px 19px rgba(0, 0, 0, 0.07);
+  border-radius: 32px;
+  padding: 1.5rem 2rem;
+  transform: translateY(-60px);
+  width: 80%;
+}
+.slide__header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.slide__header p {
+  font-size: 1.2rem;
+  margin-right: 0.7rem;
+}
+.slide__header .badge {
+  font-size: 1.2rem;
+  padding: 0.1rem 1.2rem;
+}
+.slide__detail .slide__title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-top: 1rem;
+}
+.slide__detail .slide__icons {
+  display: flex;
+  margin-top: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  color: #cacaca;
+}
+.slide__icons span {
+  font-size: 1.5rem;
+}
