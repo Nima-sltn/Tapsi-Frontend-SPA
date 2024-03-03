@@ -900,9 +900,14 @@ textarea {
 .travel__slide:not(:last-child) {
   margin-left: 2rem;
 }
-.travel__slide img {
+.slide__img {
   width: 100%;
-  height: auto;
+  height: 200px;
+}
+.travel__slide img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
   border-radius: 32px;
 }
 .slide__detail {
@@ -940,4 +945,51 @@ textarea {
 }
 .slide__icons span {
   font-size: 1.5rem;
+}
+
+/* drop down section */
+
+.accordion__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.accordion__heading {
+  margin-bottom: 0;
+}
+.accordion__content {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 1rem 2rem;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: all 0.3s linear;
+}
+.accordion__expanded .accordion__content {
+  opacity: 1;
+  max-height: 100vh;
+}
+.accordion__header .icon {
+  color: var(--color-primary);
+  transition: all 0.3s linear;
+}
+/* .accordion__expanded .icon {
+  transform: rotate(-180deg) translate(-4px, 0);
+} */
+
+.plus {
+  width: 15px;
+  height: 2px;
+  background-color: var(--color-primary);
+  border-radius: 5px;
+  transition: all 0.2s linear;
+}
+
+.plus.plus-two {
+  transform: translate(0.5px, -2px) rotate(90deg);
+}
+
+.accordion.accordion__expanded .plus-two {
+  opacity: 0;
 }
