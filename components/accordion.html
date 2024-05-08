@@ -2,46 +2,170 @@
 <html lang="fa" dir="rtl">
   <head>
     <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../css/style.css" />
-    <link rel="stylesheet" href="../css/fonts.css" />
-    <link rel="shortcut icon" href="#" />
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <link rel="stylesheet" href="/css/style.css" />
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+      integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <title>accordion</title>
+    <title>Accordion</title>
   </head>
   <body>
     <section class="container block">
-      <div class="accordion accordion__expanded">
-        <header class="accordion__header">
-          <h2 class="accordion__heading">سابقه تحصیلی</h2>
-          <span class="icon">
-            <div class="plus plus-one"></div>
-            <div class="plus plus-two"></div>
-            <!-- <i class="fas fa-chevron-circle-up"></i> -->
-          </span>
-        </header>
-        <div class="accordion__content">
-          لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با
-          استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در
-          ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و
-          کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی
-          در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می
-          طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی
-          الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این
-          صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و
-          شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای
-          اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده
-          قرار گیرد.
+      <h2>سوابق راننده</h2>
+      <div class="accordion-wrapper">
+        <div class="accordion-intro">
+          <div class="accordion__resume">
+            <h2 class="accordion__heading">رزومه و سوابق</h2>
+            <span>
+              <span class="accordion__edit">ویرایش</span>
+              <span> <i class="fa-regular fa-pen-to-square"></i></span>
+            </span>
+          </div>
+          <div class="accordion__about">
+            <h3>درباره سیبیلوف:</h3>
+            <div class="accordion__desc">
+              <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ.</p>
+              <span> <i class="fa-regular fa-pen-to-square"></i></span>
+            </div>
+          </div>
+        </div>
+        <div class="accordion">
+          <header class="accordion__header">
+            <h2 class="accordion__heading">سابقه کاری</h2>
+            <div class="icon">
+              <i class="fa-solid fa-circle-plus"></i>
+              <i class="fa-solid fa-circle-chevron-left"></i>
+            </div>
+          </header>
+          <div class="accordion__content">
+            <div class="accordion__content-resume">
+              <div class="accordion__img">
+                <img src="/assets/images/user.png" alt="user" />
+              </div>
+              <div class="accordion__title">
+                <div class="accordion__university-date">
+                  <div class="accordion__university">
+                    <span> مرکز رشد دانشگاه سیستان و بلوچستان</span>
+                    <span>مهر 1395 - بهمن 1398 (3 سال)</span>
+                  </div>
+                  <span><i class="fa-regular fa-pen-to-square"></i></span>
+                </div>
+                <span class="accordion__job">طراح گرافیک</span>
+                <p class="accordion__management">
+                  مدیر واحد گرافیک مرکز رشد دانشگاه سیستان و بلوچستان
+                </p>
+              </div>
+            </div>
+            <div class="accordion__content-resume">
+              <div class="accordion__img">
+                <img src="/assets/images/user.png" alt="user" />
+              </div>
+              <div class="accordion__title">
+                <div class="accordion__university-date">
+                  <div class="accordion__university">
+                    <span> مرکز رشد دانشگاه سیستان و بلوچستان</span>
+                    <span>مهر 1395 - بهمن 1398 (3 سال)</span>
+                  </div>
+                  <span><i class="fa-regular fa-pen-to-square"></i></span>
+                </div>
+                <span class="accordion__job">طراح گرافیک</span>
+                <p class="accordion__management">
+                  مدیر واحد گرافیک مرکز رشد دانشگاه سیستان و بلوچستان
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="accordion">
+          <header class="accordion__header">
+            <h2 class="accordion__heading">سابقه تحصیلی</h2>
+            <div class="icon">
+              <i class="fa-solid fa-circle-plus"></i>
+              <i class="fa-solid fa-circle-chevron-left"></i>
+            </div>
+          </header>
+          <div class="accordion__content">
+            <div class="accordion__content-resume">
+              <div class="accordion__img">
+                <img src="/assets/images/user.png" alt="user" />
+              </div>
+              <div class="accordion__title">
+                <div class="accordion__university-date">
+                  <div class="accordion__university">
+                    <span> مرکز رشد دانشگاه سیستان و بلوچستان</span>
+                    <span>مهر 1395 - بهمن 1398 (3 سال)</span>
+                  </div>
+                  <span><i class="fa-regular fa-pen-to-square"></i></span>
+                </div>
+                <span class="accordion__job">طراح گرافیک</span>
+                <p class="accordion__management">
+                  مدیر واحد گرافیک مرکز رشد دانشگاه سیستان و بلوچستان
+                </p>
+              </div>
+            </div>
+            <div class="accordion__content-resume">
+              <div class="accordion__img">
+                <img src="/assets/images/user.png" alt="user" />
+              </div>
+              <div class="accordion__title">
+                <div class="accordion__university-date">
+                  <div class="accordion__university">
+                    <span> مرکز رشد دانشگاه سیستان و بلوچستان</span>
+                    <span>مهر 1395 - بهمن 1398 (3 سال)</span>
+                  </div>
+                  <span><i class="fa-regular fa-pen-to-square"></i></span>
+                </div>
+                <span class="accordion__job">طراح گرافیک</span>
+                <p class="accordion__management">
+                  مدیر واحد گرافیک مرکز رشد دانشگاه سیستان و بلوچستان
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="accordion">
+          <header class="accordion__header">
+            <h2 class="accordion__heading">زبان های مسلط</h2>
+            <span class="icon__add-history">افزودن سابقه</span>
+            <div class="icon">
+              <i class="fa-solid fa-circle-plus"></i>
+              <i class="fa-solid fa-circle-chevron-left"></i>
+            </div>
+          </header>
+          <div class="accordion__content">
+            <div class="accordion__content-resume">
+              <div class="accordion__img">
+                <img src="/assets/images/user.png" alt="user" />
+              </div>
+              <div class="accordion__language">
+                <div class="accordion__university">
+                  <span>&bull; فارسی</span>
+                  <span>&bull; انگلیسی</span>
+                  <span>&bull; ترکی</span>
+                </div>
+                <span><i class="fa-regular fa-pen-to-square"></i></span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
-    <script src="../js/main.js"></script>
+
+    <script>
+      const accordionHeaders = document.querySelectorAll(".accordion__header");
+      const accordion = document.querySelector(".accordion");
+      accordionHeaders.forEach((item) => {
+        item.addEventListener("click", (e) => {
+          console.log(e.target.parentElement);
+          e.target.parentElement.classList.toggle("accordion__expanded");
+        });
+      });
+    </script>
   </body>
 </html>
