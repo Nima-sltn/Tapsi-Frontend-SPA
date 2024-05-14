@@ -72,28 +72,14 @@ function selectServiceTabs() {
         tabContent.classList.remove("active")
       );
 
-      // ADD NEW ACTIVE CLASSES
-      tab.classList.add("active");
-      targeTabContent.classList.add("active");
-    });
+    //ADD NEW ACTIVE CLASS
+    tab.classList.add("active");
+    targetTabContnt.classList.add("active");
   });
-}
+});
 
-function showAccordion() {
-  const accordionHeaders = document.querySelectorAll(".accordion__header");
-  const icon = document.querySelectorAll("div.icon");
-
-  accordionHeaders.forEach((item) => {
-    item.addEventListener("click", (e) => {
-      e.target.parentElement.classList.toggle("accordion__expanded");
-    });
-  });
-
-  icon.forEach((item) => {
-    item.addEventListener("click", (e) => {
-      e.target.parentElement.parentElement.parentElement.classList.toggle(
-        "accordion__expanded"
-      );
-    });
-  });
-}
+// const accordionHeader = document.querySelector(".accordion__header");
+// const accordion = document.querySelector(".accordion");
+// accordionHeader.addEventListener("click", (e) => {
+//   accordion.classList.toggle("accordion__expanded");
+// });
