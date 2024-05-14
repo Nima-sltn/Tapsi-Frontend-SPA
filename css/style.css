@@ -1404,10 +1404,10 @@ textarea {
 .main-footer .footer {
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
-
-.footer__item {
-  margin-bottom: 2.5rem;
+.travel__slide:not(:last-child) {
+  margin-left: 2rem;
 }
 .travel__slide img {
   width: 100%;
