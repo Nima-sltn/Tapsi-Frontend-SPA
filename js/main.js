@@ -1,79 +1,27 @@
-// Variables :
-const serviceTabs = document.querySelector(".services__tabs");
-const travelSlide = document.querySelector(".travell__slides");
-
-// DOM :
-
-document.addEventListener("DOMContentLoaded", () => {
-  // Navbar Section :
-  hamburgerMenu();
-
-  // Services Section :
-  selectServiceTabs();
-  createClickDragScroll(serviceTabs);
-
-  // Travel Section :
-  createClickDragScroll(travelSlide);
-
-  // Accordion Section :
-  showAccordion();
+const toggler = document.querySelector(".nav__toggler");
+const navbar = document.querySelector(".nav");
+toggler.addEventListener("click", (e) => {
+  navbar.classList.toggle("nav__expanded");
 });
 
-// Functions :
+const tabs = document.querySelectorAll(".tab");
+const tabContents = document.querySelectorAll(".tab-content");
+tabs.forEach((tab) => {
+  tab.addEventListener("click", (e) => {
+    const targetTabContnt = document.querySelector(`#${tab.dataset.tabTarget}`);
 
-function hamburgerMenu() {
-  const toggler = document.querySelector(".nav__toggler");
-  const navbar = document.querySelector(".nav");
-  toggler.addEventListener("click", (e) => {
-    navbar.classList.toggle("nav__expanded");
-  });
-}
-
-function createClickDragScroll(slider) {
-  let isDown = false;
-  let startX;
-  let scrollLeft;
-
-  slider.addEventListener("mousedown", (e) => {
-    isDown = true;
-    slider.classList.add("active-scroll");
-    startX = e.pageX - slider.offsetLeft;
-    scrollLeft = slider.scrollLeft;
-  });
-  slider.addEventListener("mouseleave", () => {
-    isDown = false;
-    slider.classList.remove("active-scroll");
-  });
-  slider.addEventListener("mouseup", () => {
-    isDown = false;
-    slider.classList.remove("active-scroll");
-  });
-  slider.addEventListener("mousemove", (e) => {
-    if (!isDown) return;
-    e.preventDefault();
-    const x = e.pageX - slider.offsetLeft;
-    const walk = (x - startX) * 3; //scroll-fast
-    slider.scrollLeft = scrollLeft - walk;
-  });
-}
-
-function selectServiceTabs() {
-  const tabs = document.querySelectorAll(".tab");
-  const tabContents = document.querySelectorAll(".tab-content");
-  tabs.forEach((tab) => {
-    tab.addEventListener("click", (e) => {
-      const targeTabContent = document.querySelector(
-        `#${tab.dataset.tabTarget}`
-      );
-
-      // REMOVE PREVIOUS ACTIVED CLASSES
-      tabs.forEach((tab) => tab.classList.remove("active"));
-      tabContents.forEach((tabContent) =>
-        tabContent.classList.remove("active")
-      );
+    //REMOVE PREVIOUS ACTIVED CLASS
+    tabs.forEach((tab) => tab.classList.remove("active"));
+    tabContents.forEach((tabContent) => tabContent.classList.remove("active"));
 
     //ADD NEW ACTIVE CLASS
     tab.classList.add("active");
     targetTabContnt.classList.add("active");
   });
 });
+
+// const accordionHeader = document.querySelector(".accordion__header");
+// const accordion = document.querySelector(".accordion");
+// accordionHeader.addEventListener("click", (e) => {
+//   accordion.classList.toggle("accordion__expanded");
+// });

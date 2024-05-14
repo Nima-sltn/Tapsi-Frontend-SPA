@@ -1,24 +1,25 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="en" dir="rtl">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="css/style.css" />
-    <title>Tapsi Site</title>
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./css/fonts.css" />
+    <link rel="shortcut icon" href="#" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
-      integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
       crossorigin="anonymous"
       referrerpolicy="no-referrer" />
+    <title>Tapsi Demo</title>
   </head>
   <body>
-    <!-- Navbar Section -->
     <header class="main-header">
-      <nav class="nav container">
+      <nav class="nav">
         <a href="#">
-          <img src="/assets/images/Tapsi-passenger.svg" alt="tapsi-site-logo" />
+          <img src="assets/images/logo.svg" alt="" />
         </a>
         <div class="nav__toggler">
           <div class="bar bar-one"></div>
@@ -36,67 +37,63 @@
         </ul>
       </nav>
     </header>
-    <!-- Hero Section -->
     <section class="hero-section">
       <picture>
         <source
-          srcset="./assets/images/banner.webp"
+          srcset="assets/images/banner.webp"
           type="image/webp"
           media="(min-width: 768px)" />
         <source
-          srcset="./assets/images/banner.jpg"
+          srcset="assets/images/banner.jpg"
           type="image/jpg"
           media="(min-width: 768px)" />
         <source
-          srcset="./assets/images/banner-mobile.webp"
+          srcset="assets/images/banner-mobile.webp"
           type="image/webp"
           media="(max-width: 768px)" />
         <source
-          srcset="./assets/images/banner-mobile.jpg"
+          srcset="assets/images/banner-mobile.jpg"
           type="image/jpg"
           media="(max-width: 768px)" />
-        <img alt="banner" src="./assets/images/banner.jpg" class="banner-img" />
+        <img alt="banner" src="assets/images/banner.jpg" class="banner-img" />
       </picture>
       <picture>
         <source
-          srcset="./assets/images/mockup-phone.webp"
+          srcset="assets/images/mockup-phone.webp"
           type="image/webp"
           media="(min-width: 1024px)" />
         <source
-          srcset="./assets/images/mockup-phone.png"
+          srcset="assets/images/mockup-phone.png"
           type="image/png"
           media="(min-width: 1024px)" />
-        <img
-          src="./assets/images/mockup-phone.png"
-          class="banner-phone"
-          alt="phone" />
+        <img alt="phone" class="banner-phone" />
       </picture>
       <div class="hero-wrapper container">
         <div class="intro-btn">
           <h1>تپسی</h1>
-          <h2>اپلیکیشن درخواست خودرو و پیک</h2>
+          <h2>اپلیکیشن درخواست خودرو</h2>
           <div class="intro-wrapper">
             <div class="intro-btn__passenger">
               <span class="icon">
-                <i class="fa-solid fa-arrow-down"></i>
+                <i class="fas fa-cloud-download-alt"></i>
               </span>
               <p>دانلود اپلیکیشن مسافران</p>
             </div>
             <div class="intro-btn__passenger">
               <span class="icon">
-                <i class="fa-solid fa-calendar-check"></i>
+                <i class="fas fa-cloud-download-alt"></i>
               </span>
               <p>وب اپلیکیشن مسافران</p>
             </div>
             <div class="intro-btn__passenger driver-intro">
               <span class="icon">
-                <i class="fa-solid fa-arrow-down"></i>
+                <i class="fas fa-cloud-download-alt"></i>
               </span>
               <p>دانلود اپلیکیشن رانندگان</p>
             </div>
             <div class="intro-btn__passenger driver-intro">
               <span class="icon">
-                <i class="fa-solid fa-car"></i>
+                <i class="fas fa-car"></i>
               </span>
               <p>ثبت نام راننده</p>
             </div>
@@ -104,47 +101,42 @@
         </div>
       </div>
     </section>
-    <!-- Services Section -->
     <section class="services container block">
       <h2 class="services__title block-heading">سرویس های تپسی</h2>
       <div class="services__tabs">
         <a class="tab active" data-tab-target="nav-classic-tab">
-          <img src="./assets/images/cc-classic.png" alt="tapsi-classic-icon" />
+          <img src="assets/images/cc-classic.png" alt="tapsi-classic-icon" />
           <p>تپسی کلاسیک</p>
         </a>
-        <a class="tab" data-tab-target="nav-tel-tab">
-          <img src="./assets/images/cc-tel.png" alt="tapsi-tel-icon" />
-          <p>تپسی تلفنی</p>
-        </a>
-        <a class="tab" data-tab-target="nav-line-tab">
-          <img src="./assets/images/cc-line.png" alt="tapsi-line-icon" />
-          <p>تپسی لاین</p>
-        </a>
         <a class="tab" data-tab-target="nav-motopeyk-tab">
-          <img src="./assets/images/cc-motopeyk.png" alt="motopeyk-icon" />
+          <img src="assets/images/cc-motopeyk.png" alt="motopeyk-icon" />
           <p>موتوپیک</p>
         </a>
         <a class="tab" data-tab-target="nav-autopeyk-tab">
-          <img src="./assets/images/cc-autopeyk.png" alt="autopeyk-icon" />
+          <img src="assets/images/cc-autopeyk.png" alt="autopeyk-icon" />
           <p>اتوپیک</p>
         </a>
         <a class="tab" data-tab-target="nav-plus-tab">
-          <img src="./assets/images/cc-plus.png" alt="tapsi-plus-icon" />
+          <img src="assets/images/cc-plus.png" alt="tapsi-plus-icon" />
           <p>تپسی پلاس</p>
         </a>
-        <a class="tab" data-tab-target="nav-taxi-tab">
-          <img src="./assets/images/cc-taxi.png" alt="tapsi-taxi-icon" />
-          <p>تاکسی</p>
+        <a class="tab" data-tab-target="nav-tel-tab">
+          <img src="assets/images/cc-tel.png" alt="tapsi-tel-icon" />
+          <p>تپسی تلفنی</p>
         </a>
         <a class="tab" data-tab-target="nav-hamyar-tab">
-          <img src="./assets/images/cc-hamyar.png" alt="hamyar-icon" />
+          <img src="assets/images/cc-hamyar.png" alt="hamyar-icon" />
           <p>همیار</p>
+        </a>
+        <a class="tab" data-tab-target="nav-line-tab">
+          <img src="assets/images/cc-line.png" alt="tapsi-line-icon" />
+          <p>تپسی لاین</p>
         </a>
       </div>
       <div class="container">
         <div class="tab-content active" id="nav-classic-tab">
           <div class="feature__image">
-            <img src="./assets/images/illus-classic.png" alt="classic-tapsi" />
+            <img src="assets/images/illus-classic.webp" alt="" />
           </div>
           <div class="feature__detail">
             <h3 class="feature__title">تپسی کلاسیک</h3>
@@ -156,41 +148,9 @@
             </p>
           </div>
         </div>
-        <div class="tab-content" id="nav-tel-tab">
-          <div class="feature__image">
-            <img src="./assets/images/illus-tel.png" alt="tel-tapsi" />
-          </div>
-          <div class="feature__detail">
-            <h3 class="feature__title">تپسی تلفنی</h3>
-            <p class="feature__text">
-              سرویس تپسی تلفنی یا ۱۶۳۰، این امکان را به شما می‌دهد که بدون نیاز
-              به اینترنت و اپلیکیشن، درخواست خودرو بدهید. این سرویس تاکسی تلفنی
-              مناسب زمانی است که به هر دلیلی دسترسی به اینترنت یا اپلیکیشن
-              ندارید. همچنین سرویس تلفنی تپسی، راه حلی مناسب برای افرادی است که
-              کار کردن با اپلیکیشن‌های موبایلی برایشان راحت نیست.
-            </p>
-          </div>
-        </div>
-        <div class="tab-content" id="nav-line-tab">
-          <div class="feature__image">
-            <img src="./assets/images/illus-line.png" alt="line-tapsi" />
-          </div>
-          <div class="feature__detail">
-            <h3 class="feature__title">تپسی لاین</h3>
-            <p class="feature__text">
-              تپسی لاین سرویسی است که امکان سفر اشتراکی را برایتان فراهم می‌کند.
-              در این سرویس شما با مسافر دیگری که هم‌مسیرتان است، هم‌سفر خواهید
-              بود و هزینه سفرتان تقسیم می‌شود. این سرویس در حال حاضر به دلیل
-              شرایط همه‌گیری بیماری کرونا از دسترس خارج شده اما با بهبود شرایط
-              می‌توانید از سرویس لاین استفاده کنید.
-            </p>
-          </div>
-        </div>
         <div class="tab-content" id="nav-motopeyk-tab">
           <div class="feature__image">
-            <img
-              src="./assets/images/illus-motopeyk.png"
-              alt="motopeyk-tapsi" />
+            <img src="assets/images/illus-motopeyk.webp" alt="" />
           </div>
           <div class="feature__detail">
             <h3 class="feature__title">موتوپیک</h3>
@@ -204,9 +164,7 @@
         </div>
         <div class="tab-content" id="nav-autopeyk-tab">
           <div class="feature__image">
-            <img
-              src="./assets/images/illus-autopeyk.png"
-              alt="autopeyk-tapsi" />
+            <img src="assets/images/illus-autopeyk.webp" alt="" />
           </div>
           <div class="feature__detail">
             <h3 class="feature__title">اتوپیک</h3>
@@ -221,7 +179,7 @@
         </div>
         <div class="tab-content" id="nav-plus-tab">
           <div class="feature__image">
-            <img src="./assets/images/illus-plus.png" alt="plus-tapsi" />
+            <img src="assets/images/illus-plus.webp" alt="" />
           </div>
           <div class="feature__detail">
             <h3 class="feature__title">تپسی پلاس</h3>
@@ -234,24 +192,24 @@
             </p>
           </div>
         </div>
-        <div class="tab-content" id="nav-taxi-tab">
+        <div class="tab-content" id="nav-tel-tab">
           <div class="feature__image">
-            <img src="./assets/images/illus-taxi.png" alt="taxi-tapsi" />
+            <img src="assets/images/illus-tel.webp" alt="" />
           </div>
           <div class="feature__detail">
-            <h3 class="feature__title">تپسی تاکسی</h3>
+            <h3 class="feature__title">تپسی تلفنی</h3>
             <p class="feature__text">
-              در سرویس تاکسی تپسی، تاکسی‌های زرد یا سبز شما را به مقصدتان
-              می‌رسانند. این سرویس در حال حاضر در تهران فعال است و چنانچه به
-              دلایلی مانند ورود به محدوده طرح ترافیک یا طرح آلودگی هوا، ترجیح
-              بدهید از تاکسی برای رفت‌وآمدتان استفاده کنید، گزینه مناسبی خواهد
-              بود.
+              سرویس تپسی تلفنی یا ۱۶۳۰، این امکان را به شما می‌دهد که بدون نیاز
+              به اینترنت و اپلیکیشن، درخواست خودرو بدهید. این سرویس تاکسی تلفنی
+              مناسب زمانی است که به هر دلیلی دسترسی به اینترنت یا اپلیکیشن
+              ندارید. همچنین سرویس تلفنی تپسی، راه حلی مناسب برای افرادی است که
+              کار کردن با اپلیکیشن‌های موبایلی برایشان راحت نیست.
             </p>
           </div>
         </div>
         <div class="tab-content" id="nav-hamyar-tab">
           <div class="feature__image">
-            <img src="./assets/images/illus-hamyar.png" alt="hamyar-tapsi" />
+            <img src="assets/images/illus-hamyar.webp" alt="" />
           </div>
           <div class="feature__detail">
             <h3 class="feature__title">همیار</h3>
@@ -263,494 +221,289 @@
             </p>
           </div>
         </div>
+        <div class="tab-content" id="nav-line-tab">
+          <div class="feature__image">
+            <img src="assets/images/illus-line.webp" alt="" />
+          </div>
+          <div class="feature__detail">
+            <h3 class="feature__title">تپسی لاین</h3>
+            <p class="feature__text">
+              تپسی لاین سرویسی است که امکان سفر اشتراکی را برایتان فراهم می‌کند.
+              در این سرویس شما با مسافر دیگری که هم‌مسیرتان است، هم‌سفر خواهید
+              بود و هزینه سفرتان تقسیم می‌شود. این سرویس در حال حاضر به دلیل
+              شرایط همه‌گیری بیماری کرونا از دسترس خارج شده اما با بهبود شرایط
+              می‌توانید از سرویس لاین استفاده کنید.
+            </p>
+          </div>
+        </div>
       </div>
     </section>
-    <!-- Feature Section -->
-    <section class="feature container block">
+    <section
+      class="feature container block"
+      data-aos="fade-left"
+      data-aos-duration="500">
       <div class="feature__image">
-        <img src="/assets/images/i-mac-1.png" alt="tapsi-services" />
+        <img src="assets/images/i-mac-1.png" alt="" />
       </div>
       <div class="feature__detail">
         <h2 class="feature__title">خدمات تپسی برای کسب و کارها</h2>
         <p class="feature__text">
-          پنل سازمانی تپسی، یک سامانه تحت وب است که به سادگی امکان درخواست
-          هم‌زمان تعداد نامحدودی خودرو و پیک را برای کسب‌وکارها و سازمان‌ها
-          فراهم می‌کند. و با استفاده از آن می‌توانید ماموریت های درون‌شهری و
-          ارسال کالاهای خود را به سادگی مدیریت کنید.
+          پنل سازمانی تپسی,یک سامانه تحت وب است که به سادگی امکان درخواست همزمان
+          تعداد نامحدودی خودرو و پیک را برای کسب و کارها و سازمان ها فراهم میکند
+          و با استفاده از آن میتوانید ماموریت های درون شهری و ارسال کالاهای خود
+          را به سادگی مدیریت کنید
         </p>
         <button class="btn btn--primary">ورود و ثبت نام پنل سازمانی</button>
       </div>
     </section>
-    <section class="feature container block charge">
+    <section
+      class="feature container block charge"
+      data-aos="fade-right"
+      data-aos-duration="500">
       <div class="feature__image">
-        <img src="/assets/images/ezgif.com-gif-maker.png" alt="tapsi-credit" />
+        <img src="assets/images/macbook.webp" alt="" />
       </div>
       <div class="feature__detail">
         <h2 class="feature__title">خرید کد اعتبار تپسی</h2>
         <p class="feature__text">
-          کاربران، کسب‌ و کارها و سازمان‌ها می‌توانند به تعداد و مبلغ مورد
-          نظرشان، کد اعتبار یا کد تخفیف تپسی تهیه کرده، برای خود، پرسنل و یا
-          مشتریانشان استفاده کنند و از تخفیف‌های ویژه تپسی نیز بهره‌مند شوند.
-          این کدها امکان سفارشی‌سازی بر اساس مبدا، مقصد، زمان، درصد و مبلغ را
-          دارند.
+          کد اعتبار تپسی امکان استفاده از تخفیف یک تا ده درصدی سفر با تپسی را
+          برای کاربران، کسب و کارها و سازمان‌ها فراهم می‌کند. تنها با صرف چند
+          دقیقه می‌توانید این کد را تهیه کنید تا هزینه سفرهایتان با تپسی را کاهش
+          دهید یا آن را در اختیار کارکنان و مشتریانتان بگذارید.
         </p>
         <button class="btn btn--primary">خرید کد اعتبار و تخفیف</button>
       </div>
     </section>
-    <!-- Plan-Block Section -->
     <section class="container block">
-      <h2 class="block-heading">تعرفه های ویژه مشتریان</h2>
+      <h2 class="block__heading">تعرفه های ویژه مشتریان</h2>
       <div class="block-plan">
         <div class="plan">
           <div class="card card--secondary">
             <header class="card__header">
               <span class="plan__introduction">
-                <span class="plan__name">عادی</span>
-                <span class="badge badge--secondary">10% OFF</span>
+                <span class="plan__title">اقتصادی</span>
+                <span class="badge badge--secondary">15% OFF</span>
               </span>
-              <span class="plan__price"> 290,000 </span>
+
+              <span class="plan__price">390,000</span>
               <span class="plan__billing-cycle"> ماهانه/تومان </span>
-              <span class="plan__description">سرویس ماشین های معمولی </span>
+
+              <span class="plan__description">سرویس ماشین های کلاسیک</span>
             </header>
             <div class="card__body">
               <ul class="list list--tick">
-                <li class="list__item">کیفیت افتضاح</li>
-                <li class="list__item">چهارتا چرخ داره</li>
-                <li class="list__item">راننده بداخلاق</li>
+                <li class="list__item">کیفیت عالی</li>
+                <li class="list__item">کم سر و صدا</li>
+                <li class="list__item">زمان محدود</li>
+                <li class="list__item">سرویس روزانه</li>
               </ul>
-              <button class="btn btn--secondary btn--block">ثبت سفارش</button>
+              <button class="btn btn--block btn--primary">ثبت سفارش</button>
             </div>
           </div>
         </div>
+
         <div class="plan plan--popular">
           <div class="card card--primary">
             <header class="card__header">
               <span class="plan__introduction">
-                <span class="plan__name">اقتصادی</span>
+                <span class="plan__title">اقتصادی</span>
                 <span class="badge badge--primary">15% OFF</span>
               </span>
+
               <span class="plan__price"> 390,000 </span>
               <span class="plan__billing-cycle"> ماهانه/تومان </span>
+
               <span class="plan__description">سرویس ماشین های کلاسیک</span>
             </header>
             <div class="card__body">
               <ul class="list list--tick">
                 <li class="list__item">کیفیت عالی</li>
                 <li class="list__item">کم سروصدا</li>
+                <li class="list__item">زمان محدود</li>
                 <li class="list__item">سرویس روزانه</li>
               </ul>
-              <button class="btn btn--primary btn--block">ثبت سفارش</button>
+              <button class="btn btn--block btn--primary">ثبت سفارش</button>
             </div>
           </div>
         </div>
+
         <div class="plan">
           <div class="card card--secondary">
             <header class="card__header">
               <span class="plan__introduction">
-                <span class="plan__name">ویژه</span>
-                <span class="badge badge--secondary">20% OFF</span>
+                <span class="plan__title">اقتصادی</span>
+                <span class="badge badge--secondary">15% OFF</span>
               </span>
-              <span class="plan__price"> 490,000 </span>
+
+              <span class="plan__price">390,000</span>
               <span class="plan__billing-cycle"> ماهانه/تومان </span>
-              <span class="plan__description">سرویس ماشین های مدل بالا</span>
+
+              <span class="plan__description">سرویس ماشین های کلاسیک</span>
             </header>
             <div class="card__body">
               <ul class="list list--tick">
-                <li class="list__item">کیفیت خفن</li>
-                <li class="list__item">بی سروصدا</li>
+                <li class="list__item">کیفیت عالی</li>
+                <li class="list__item">کم سر و صدا</li>
+                <li class="list__item">زمان محدود</li>
                 <li class="list__item">سرویس روزانه</li>
               </ul>
-              <button class="btn btn--secondary btn--block">ثبت سفارش</button>
+              <button class="btn btn--block btn--primary">ثبت سفارش</button>
             </div>
           </div>
         </div>
       </div>
     </section>
-    <!-- Travell Section -->
-    <section class="container travell block">
-      <h2>جوایز راننده برتر</h2>
-      <div class="travell__slides">
-        <div class="travell__slide">
-          <div class="slide__img">
-            <img src="/assets/images/travell.png" alt="travell-01" />
-          </div>
-          <div class="slide__detail">
-            <div class="slide__header">
-              <span class="badge badge--primary">ویژه</span>
-              <p>اقامت رایگان &bull; سفر سه روزه</p>
-            </div>
-            <p class="slide__title">سفر به قلب کویر</p>
-            <div class="slide__icons">
-              <div class="slide__icons-right">
-                <i class="fa-solid fa-heart"></i>
-                <span>12</span>
-                <i class="fa-regular fa-eye"></i>
-                <span>24</span>
-              </div>
-              <div class="slide__icons-left">
-                <i class="fa-regular fa-pen-to-square"></i>
-                <i class="fa-regular fa-trash-can"></i>
-              </div>
-            </div>
-            <div class="avatar-group">
-              <div class="avatar">
-                <img src="/assets/images/avatar-1.jpg" alt="avatar-tl01-01" />
-              </div>
-              <div class="avatar">
-                <img src="/assets/images/avatar-2.jpeg" alt="avatar-tl01-02" />
-              </div>
-              <div class="avatar">
-                <img src="/assets/images/avatar-3.jpg" alt="avatar-tl01-03" />
-              </div>
-              <div class="hidden-avatars">+10</div>
-              <span class="slide__suggest">پیشنهاد</span>
-            </div>
-          </div>
-        </div>
-        <div class="travell__slide">
-          <div class="slide__img">
-            <img src="/assets/images/travell-2.jpg" alt="travell-02" />
-          </div>
-          <div class="slide__detail">
-            <div class="slide__header">
-              <span class="badge">معمولی</span>
-              <p>اقامت رایگان &bull; سفر سه روزه</p>
-            </div>
-            <p class="slide__title">سفر به قلب کویر</p>
-            <div class="slide__icons">
-              <div class="">
-                <i class="fa-solid fa-heart"></i>
-                <span>12</span>
-                <i class="fa-regular fa-eye"></i>
-                <span>24</span>
-              </div>
-              <div class="">
-                <i class="fa-regular fa-pen-to-square"></i>
-                <i class="fa-regular fa-trash-can"></i>
-              </div>
-            </div>
-            <div class="avatar-group">
-              <div class="avatar">
-                <img src="/assets/images/avatar-1.jpg" alt="avatar-tl02-01" />
-              </div>
-              <div class="avatar">
-                <img src="/assets/images/avatar-2.jpeg" alt="avatar-tl02-02" />
-              </div>
-              <div class="avatar">
-                <img src="/assets/images/avatar-3.jpg" alt="avatar-tl02-03" />
-              </div>
-              <div class="hidden-avatars">+10</div>
-              <span class="slide__suggest">پیشنهاد</span>
-            </div>
-          </div>
-        </div>
-        <div class="travell__slide">
-          <div class="slide__img">
-            <img src="assets/images/travell.png" alt="" />
-          </div>
-          <div class="slide__detail">
-            <div class="slide__header">
-              <span class="badge badge--primary">ویژه</span>
-              <p>اقامت رایگان &bull; سفر سه روزه</p>
-            </div>
-            <p class="slide__title">سفر به قلب کویر</p>
-            <div class="slide__icons">
-              <div class="">
-                <i class="fa-solid fa-heart"></i>
-                <span>12</span>
-                <i class="fa-regular fa-eye"></i>
-                <span>24</span>
-              </div>
-              <div class="">
-                <i class="fa-regular fa-pen-to-square"></i>
-                <i class="fa-regular fa-trash-can"></i>
-              </div>
-            </div>
-            <div class="avatar-group">
-              <div class="avatar">
-                <img src="/assets/images/avatar-1.jpg" alt="avatar-tl03-01" />
-              </div>
-              <div class="avatar">
-                <img src="/assets/images/avatar-2.jpeg" alt="avatar-tl03-02" />
-              </div>
-              <div class="avatar">
-                <img src="/assets/images/avatar-3.jpg" alt="avatar-tl03-03" />
-              </div>
-              <div class="hidden-avatars">+10</div>
-              <span class="slide__suggest">پیشنهاد</span>
-            </div>
-          </div>
-        </div>
-        <div class="travell__slide">
-          <div class="slide__img">
-            <img src="assets/images/travell.png" alt="" />
-          </div>
-          <div class="slide__detail">
-            <div class="slide__header">
-              <span class="badge badge--primary">ویژه</span>
-              <p>اقامت رایگان &bull; سفر سه روزه</p>
-            </div>
-            <p class="slide__title">سفر به قلب کویر</p>
-            <div class="slide__icons">
-              <div class="">
-                <i class="fa-solid fa-heart"></i>
-                <span>12</span>
-                <i class="fa-regular fa-eye"></i>
-                <span>24</span>
-              </div>
-              <div class="">
-                <i class="fa-regular fa-pen-to-square"></i>
-                <i class="fa-regular fa-trash-can"></i>
-              </div>
-            </div>
-            <div class="avatar-group">
-              <div class="avatar">
-                <img src="/assets/images/avatar-1.jpg" alt="avatar-tl04-01" />
-              </div>
-              <div class="avatar">
-                <img src="/assets/images/avatar-2.jpeg" alt="avatar-tl04-02" />
-              </div>
-              <div class="avatar">
-                <img src="/assets/images/avatar-3.jpg" alt="avatar-tl04-03" />
-              </div>
-              <div class="hidden-avatars">+10</div>
-              <span class="slide__suggest">پیشنهاد</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- Radio Button Section -->
     <section class="container block">
-      <h2>انتخاب راننده</h2>
-      <div class="select-type">
-        <div class="select-control">
-          <input type="radio" name="webinar" id="type-A" />
-          <label for="type-A">عمومی</label>
-        </div>
-        <div class="select-control">
-          <input type="radio" name="webinar" id="type-B" />
-          <label for="type-B">اختصاصی</label>
-        </div>
-      </div>
-    </section>
-    <!-- Accordion Section -->
-    <section class="container block">
-      <h2>سوابق راننده</h2>
-      <div class="accordion-wrapper">
-        <div class="accordion-intro">
-          <div class="accordion__resume">
-            <h2 class="accordion__heading">رزومه و سوابق</h2>
-            <span>
-              <span class="accordion__edit">ویرایش</span>
-              <span> <i class="fa-regular fa-pen-to-square"></i></span>
-            </span>
-          </div>
-          <div class="accordion__about">
-            <h3>درباره سیبیلوف:</h3>
-            <div class="accordion__desc">
-              <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ.</p>
-              <span> <i class="fa-regular fa-pen-to-square"></i></span>
-            </div>
-          </div>
-        </div>
-        <div class="accordion">
-          <header class="accordion__header">
-            <h2 class="accordion__heading">سابقه کاری</h2>
-            <div class="icon">
-              <!-- <i class="fa-solid fa-circle-plus"></i> -->
-              <i class="fa-solid fa-circle-chevron-left"></i>
-            </div>
-          </header>
-          <div class="accordion__content">
-            <div class="accordion__content-resume">
-              <div class="accordion__img">
-                <img src="/assets/images/user.png" alt="user" />
-              </div>
-              <div class="accordion__title">
-                <div class="accordion__university-date">
-                  <div class="accordion__university">
-                    <span> مرکز رشد دانشگاه سیستان و بلوچستان</span>
-                    <span>مهر 1395 - بهمن 1398 (3 سال)</span>
-                  </div>
-                  <span><i class="fa-regular fa-pen-to-square"></i></span>
-                </div>
-                <span class="accordion__job">طراح گرافیک</span>
-                <p class="accordion__management">
-                  مدیر واحد گرافیک مرکز رشد دانشگاه سیستان و بلوچستان
-                </p>
-              </div>
-            </div>
-            <div class="accordion__content-resume">
-              <div class="accordion__img">
-                <img src="/assets/images/user.png" alt="user" />
-              </div>
-              <div class="accordion__title">
-                <div class="accordion__university-date">
-                  <div class="accordion__university">
-                    <span> مرکز رشد دانشگاه سیستان و بلوچستان</span>
-                    <span>مهر 1395 - بهمن 1398 (3 سال)</span>
-                  </div>
-                  <span><i class="fa-regular fa-pen-to-square"></i></span>
-                </div>
-                <span class="accordion__job">طراح گرافیک</span>
-                <p class="accordion__management">
-                  مدیر واحد گرافیک مرکز رشد دانشگاه سیستان و بلوچستان
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="accordion">
-          <header class="accordion__header">
-            <h2 class="accordion__heading">سابقه تحصیلی</h2>
-            <div class="icon">
-              <i class="fa-solid fa-circle-chevron-left"></i>
-            </div>
-          </header>
-          <div class="accordion__content">
-            <div class="accordion__content-resume">
-              <div class="accordion__img">
-                <img src="/assets/images/user.png" alt="user" />
-              </div>
-              <div class="accordion__title">
-                <div class="accordion__university-date">
-                  <div class="accordion__university">
-                    <span> مرکز رشد دانشگاه سیستان و بلوچستان</span>
-                    <span>مهر 1395 - بهمن 1398 (3 سال)</span>
-                  </div>
-                  <span><i class="fa-regular fa-pen-to-square"></i></span>
-                </div>
-                <span class="accordion__job">طراح گرافیک</span>
-                <p class="accordion__management">
-                  مدیر واحد گرافیک مرکز رشد دانشگاه سیستان و بلوچستان
-                </p>
-              </div>
-            </div>
-            <div class="accordion__content-resume">
-              <div class="accordion__img">
-                <img src="/assets/images/user.png" alt="user" />
-              </div>
-              <div class="accordion__title">
-                <div class="accordion__university-date">
-                  <div class="accordion__university">
-                    <span> مرکز رشد دانشگاه سیستان و بلوچستان</span>
-                    <span>مهر 1395 - بهمن 1398 (3 سال)</span>
-                  </div>
-                  <span><i class="fa-regular fa-pen-to-square"></i></span>
-                </div>
-                <span class="accordion__job">طراح گرافیک</span>
-                <p class="accordion__management">
-                  مدیر واحد گرافیک مرکز رشد دانشگاه سیستان و بلوچستان
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="accordion">
-          <header class="accordion__header">
-            <h2 class="accordion__heading">زبان های مسلط</h2>
-            <div class="icon">
-              <i class="fa-solid fa-circle-chevron-left"></i>
-            </div>
-          </header>
-          <div class="accordion__content">
-            <div class="accordion__content-resume">
-              <div class="accordion__img">
-                <img src="/assets/images/user.png" alt="user" />
-              </div>
-              <div class="accordion__language">
-                <div class="accordion__university">
-                  <span>&bull; فارسی</span>
-                  <span>&bull; انگلیسی</span>
-                  <span>&bull; ترکی</span>
-                </div>
-                <span><i class="fa-regular fa-pen-to-square"></i></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- Contact-Us Section -->
-    <section class="container block">
-      <h2 class="block-heading">تماس با ما</h2>
+      <h2 class="block__heading">تماس با ما</h2>
       <div class="contact-us">
         <div class="contact-us__social">
           <span class="icon-container">
             <svg class="icon">
-              <use xlink:href="/assets/images/svg-sprite.svg#linkedin"></use>
+              <use xlink:href="assets/images/svg-sprite.svg#linkedin"></use>
             </svg>
           </span>
           <span class="icon-container">
             <svg class="icon">
-              <use xlink:href="/assets/images/svg-sprite.svg#telegram"></use>
+              <use xlink:href="assets/images/svg-sprite.svg#telegram"></use>
             </svg>
           </span>
           <span class="icon-container">
             <svg class="icon">
-              <use xlink:href="/assets/images/svg-sprite.svg#twitter"></use>
+              <use xlink:href="assets/images/svg-sprite.svg#twitter"></use>
             </svg>
           </span>
         </div>
         <div class="contact-us__icons">
           <div class="icon-holder">
-            <span class="icon-holder__label">ایران - البرز - کرج </span>
+            <span class="icon-holder__label">nimaso8228@gmail.com</span>
             <span class="icon-container">
               <svg class="icon">
-                <use xlink:href="/assets/images/svg-sprite.svg#Location"></use>
+                <use xlink:href="assets/images/svg-sprite.svg#Message"></use>
               </svg>
             </span>
           </div>
           <div class="icon-holder">
-            <span class="icon-holder__label">+989014334908</span>
+            <span class="icon-holder__label">09339876543</span>
             <span class="icon-container">
               <svg class="icon">
-                <use xlink:href="/assets/images/svg-sprite.svg#Calling"></use>
+                <use xlink:href="assets/images/svg-sprite.svg#Calling"></use>
               </svg>
             </span>
           </div>
           <div class="icon-holder">
-            <span class="icon-holder__label">khosravii.farzin@gmail.com</span>
+            <span class="icon-holder__label"
+              >ایران-فارس-شیراز-خیابان123-کوچه12</span
+            >
             <span class="icon-container">
               <svg class="icon">
-                <use xlink:href="/assets/images/svg-sprite.svg#Message"></use>
+                <use xlink:href="assets/images/svg-sprite.svg#Location"></use>
               </svg>
             </span>
           </div>
         </div>
         <div class="contact-us__map">
-          <img src="/assets/images/map.png" alt="contact-us-map" />
+          <img src="assets/images/map.png" alt="" />
         </div>
         <div class="contact-us__form">
           <div class="form-wrapper">
             <h3>نظرات شما</h3>
             <form>
               <input type="text" placeholder="نام و نام خانوادگی" />
-              <input
-                type="email"
-                placeholder="لطفا ایمیل خود را وارد کنید"
-                dir="ltr" />
-              <textarea cols="30" rows="10"></textarea>
+              <input type="email" placeholder="ایمیل خود را وارد کنید" />
+              <textarea name="" id="" cols="30" rows="10"></textarea>
               <button type="submit" class="btn btn--primary">ثبت نظر</button>
             </form>
           </div>
         </div>
       </div>
     </section>
-    <!-- Footer Section -->
+    <section class="container block travel">
+      <h2 class="block__heading">جوایز ویژه</h2>
+      <div class="travel__slides">
+        <div class="travel__slide">
+          <div class="slide__img">
+            <img src="assets/images/travell.png" alt="" />
+          </div>
+          <div class="slide__detail">
+            <div class="slide__header">
+              <span class="badge badge--primary">ویژه</span>
+              <p>اقامت رایگان &bull; سفر سه روزه</p>
+            </div>
+            <p class="slide__title">سفر به قلب کویر</p>
+            <div class="slide__icons">
+              <div>
+                <i class="fas fa-heart"></i>
+                <span>12</span>
+                <i class="far fa-eye"></i>
+                <span>14</span>
+              </div>
+              <div>
+                <i class="far fa-edit"></i> <i class="far fa-trash-alt"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="travel__slide">
+          <div class="slide__img">
+            <img src="assets/images/travell-2.jpg" alt="" />
+          </div>
+          <div class="slide__detail">
+            <div class="slide__header">
+              <span class="badge badge--primary">ویژه</span>
+              <p>اقامت رایگان &bull; سفر سه روزه</p>
+            </div>
+            <p class="slide__title">سفر به قلب کویر</p>
+            <div class="slide__icons">
+              <div>
+                <i class="fas fa-heart"></i>
+                <span>12</span>
+                <i class="far fa-eye"></i>
+                <span>14</span>
+              </div>
+              <div>
+                <i class="far fa-edit"></i> <i class="far fa-trash-alt"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="travel__slide">
+          <div class="slide__img">
+            <img src="assets/images/travell-4.jpg" alt="" />
+          </div>
+          <div class="slide__detail">
+            <div class="slide__header">
+              <span class="badge badge--primary">ویژه</span>
+              <p>اقامت رایگان &bull; سفر سه روزه</p>
+            </div>
+            <p class="slide__title">سفر به قلب کویر</p>
+            <div class="slide__icons">
+              <div>
+                <i class="fas fa-heart"></i>
+                <span>12</span>
+                <i class="far fa-eye"></i>
+                <span>14</span>
+              </div>
+              <div>
+                <i class="far fa-edit"></i> <i class="far fa-trash-alt"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
     <footer class="main-footer">
       <div class="container footer">
-        <div class="footer__item">
-          <div class="footer__item logo">
-            <a href="#"
-              ><img
-                src="/assets/images/tapsi-logo-white.svg"
-                alt="footer-logo" />
-            </a>
+        <div class="brand-col">
+          <div>
+            <img
+              src="assets/images/tapsi-logo-white.svg"
+              alt="logo"
+              class="footer-logo" />
           </div>
-          <h5>اپلیکیشن درخواست خودرو و پیک</h5>
-          <p>تمام حقوق مادی و معنوی این وبسایت متعلق به تپسی است.</p>
+          <h3>اپلیکیشن درخواست خودرو و پیک</h3>
+          <p class="copy-right">
+            تمام حقوق مادی و معنوی این وبسایت متعلق به تپسی است.
+          </p>
         </div>
         <div class="footer__item">
           <h6>تپسی</h6>
@@ -758,6 +511,7 @@
           <a href="#">فرصت شغلی</a>
           <a href="#">تماس با ما</a>
           <a href="#">لوگو و هویت سازمانی</a>
+          <a href="#">استخدام بازاریاب</a>
         </div>
         <div class="footer__item">
           <h6>مسافران</h6>
@@ -765,35 +519,40 @@
           <a href="#">نسخه وب تپسی</a>
           <a href="#">پرسش های متداول مسافران</a>
           <a href="#">شرایط و قوانین مسافران</a>
+          <a href="#">باشگاه مشتریان</a>
         </div>
         <div class="footer__item">
           <h6>رانندگان</h6>
           <a href="#">دانلود اپ سفیر</a>
-          <a href="#">ثبت نام راننده تاکسی اینترنتی</a>
+          <a href="#">ثبت نام راننده تاکسی</a>
           <a href="#">پرسش های متداول سفیران</a>
           <a href="#">شرایط و قوانین سفیران</a>
+          <a href="#">باشگاه سفیران</a>
         </div>
         <div class="footer__item">
           <h6>کسب و کارها</h6>
           <a href="#">پنل سازمانی تپسی</a>
           <a href="#">خرید کد اعتبار و تخفیف</a>
           <a href="#">دریافت API</a>
-          <a href="#">معرفی راننده به تپسی</a>
         </div>
-        <div class="footer__item enemad">
-          <div class="footer__enemad">
-            <img src="/assets/images/enemad.png" alt="footer-enemad-01" />
+        <div class="footer__trust">
+          <div class="footer__enemad one">
+            <img src="assets/images/enemad.png" alt="" />
           </div>
-          <div class="footer__enemad">
-            <img src="/assets/images/enemad.png" alt="footer-enemad-02" />
+          <div class="footer__enemad two">
+            <img src="assets/images/enemad2.png" alt="" />
           </div>
-          <div class="footer__enemad">
-            <img src="/assets/images/enemad.png" alt="footer-enemad-03" />
+          <div class="footer__enemad three">
+            <img src="assets/images/enemad3.png" alt="" />
           </div>
         </div>
       </div>
     </footer>
-    <!-- JavaScript File -->
-    <script src="/js/Main.js"></script>
+
+    <script src="js/main.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      AOS.init({ disable: "mobile" });
+    </script>
   </body>
 </html>
