@@ -132,9 +132,6 @@ h2 {
 .list--tick .list__item {
   background: url("/assets/images/Tick-Square.svg") no-repeat right center;
   padding-right: 3rem;
-}
-
-.list--tick .list__item {
   margin-bottom: 1.5rem;
 }
 
@@ -224,14 +221,12 @@ h2 {
 
 .container {
   display: grid;
-  /* grid-template-columns: 1fr; */
   max-width: 1140px;
   margin: 0 auto;
 }
 
 @media screen and (min-width: 1024px) {
   .container {
-    /* margin: 0; */
     max-width: 1140px;
   }
 }
@@ -290,7 +285,6 @@ h2 {
   display: grid;
   justify-content: center;
   gap: 3rem 4rem;
-  /* height: 85vh; */
 }
 
 .contact-us__map {
@@ -313,12 +307,10 @@ h2 {
   }
   .contact-us__map {
     grid-area: map;
+    display: block;
   }
   .contact-us__social {
     grid-area: icons;
-  }
-  .contact-us__map {
-    display: block;
   }
 }
 
@@ -435,7 +427,7 @@ textarea {
 ::placeholder {
   color: #18171d;
   font-size: 1.2rem;
-  font-family: "vazir";
+  font-family: "vazir", Tahoma, Arial, sans-serif;
 }
 .form-wrapper input,
 .form-wrapper textarea {
@@ -443,17 +435,12 @@ textarea {
   background-color: #f5f5f5;
   border: 1px solid #e8e8e8;
   padding: 1.2rem 1.5rem;
-  font-family: "vazir";
+  font-family: "vazir", Tahoma, Arial, sans-serif;
   margin-bottom: 1.5rem;
 }
 .form-wrapper textarea {
   border-radius: 5px;
 }
-/* .form-wrapper button {
-  align-self: center;
-  border-radius: 35px;
-  width: 145px;
-} */
 
 .form-wrapper input:focus,
 .form-wrapper textarea:focus {
@@ -716,6 +703,10 @@ textarea {
   margin-bottom: 2.5rem;
 }
 .intro-btn__passenger {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
   border-radius: 12px;
   background-color: #fff;
   margin-bottom: 2rem;
@@ -727,12 +718,7 @@ textarea {
   flex-direction: column;
   flex-wrap: wrap;
 }
-.intro-btn__passenger {
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-}
+
 .intro-btn__passenger p {
   font-size: 1.2rem;
 }
@@ -793,7 +779,6 @@ textarea {
   padding: 5px 0 15px;
 }
 .services__tabs a {
-  display: block;
   text-decoration: none;
   color: #444;
   display: flex;
@@ -971,9 +956,6 @@ textarea {
   color: var(--color-primary);
   transition: all 0.3s linear;
 }
-/* .accordion__expanded .icon {
-  transform: rotate(-180deg) translate(-4px, 0);
-} */
 
 .plus {
   width: 15px;
