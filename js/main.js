@@ -19,9 +19,3 @@ tabs.forEach((tab) => {
     targetTabContnt.classList.add("active");
   });
 });
-
-// const accordionHeader = document.querySelector(".accordion__header");
-// const accordion = document.querySelector(".accordion");
-// accordionHeader.addEventListener("click", (e) => {
-//   accordion.classList.toggle("accordion__expanded");
-// });
