@@ -813,7 +813,7 @@ textarea {
   display: none;
 }
 .tab-content {
-  display: flex;
+  display: none;
   justify-content: space-between;
   border-bottom: 1px solid #ddd;
 }
