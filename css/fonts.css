@@ -1,16 +1,27 @@
+/**
+ * Web font loading.
+ *
+ * `font-display: swap` keeps text visible while Vazir loads; paths are
+ * relative so the site also works from a sub-path or a local file server.
+ */
 @font-face {
   font-family: "vazir";
   font-weight: 400;
   font-style: normal;
-  src: url("/assets/fonts/Vazir-Regular.woff") format("woff");
+  font-display: swap;
+  src: url("../assets/fonts/Vazir-Regular.woff") format("woff");
 }
 @font-face {
   font-family: "vazir";
   font-weight: 700;
   font-style: normal;
-  src: url("/assets/fonts/Vazir-Bold.woff") format("woff");
+  font-display: swap;
+  src: url("../assets/fonts/Vazir-Bold.woff") format("woff");
 }
 body,
-button {
+button,
+input,
+select,
+textarea {
   font-family: "vazir", Tahoma, Arial, sans-serif;
 }
