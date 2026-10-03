@@ -1,9 +1,10 @@
 /**
  * Offers carousel (scroll-snap rail with prev/next controls).
  *
- * Uses the container's native overflow scrolling, so touch, trackpad and
- * keyboard users all get the same behaviour. Controls disable themselves
- * at either end of the rail and work in both writing directions.
+ * Uses the container's native overflow scrolling, so touch and pointer users
+ * get native behaviour. Keyboard users drive the rail through the prev/next
+ * controls, which disable themselves at either end and work in both writing
+ * directions.
  *
  * @namespace Tapsi.carousel
  */
@@ -69,17 +70,6 @@
         scrollByCard(container, 1);
       });
     }
-
-    // Keyboard scrolling for the focusable rail.
-    container.addEventListener("keydown", function (event) {
-      if (event.key === "ArrowLeft") {
-        event.preventDefault();
-        scrollByCard(container, 1);
-      } else if (event.key === "ArrowRight") {
-        event.preventDefault();
-        scrollByCard(container, -1);
-      }
-    });
 
     var ticking = false;
     container.addEventListener(

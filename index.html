@@ -98,8 +98,12 @@
         try {
           var saved = localStorage.getItem("tapsi-theme");
           var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-          root.dataset.theme = saved === "dark" || saved === "light" ? saved : prefersDark ? "dark" : "light";
+          var theme = prefersDark ? "dark" : "light";
+          if (saved === "dark" || saved === "light") theme = saved;
+          root.dataset.theme = theme;
         } catch (error) {
+          // Storage blocked (private mode / disabled cookies): fall back to light.
+          console.warn("Theme preference unavailable:", error);
           root.dataset.theme = "light";
         }
       })();
@@ -312,7 +316,7 @@
         </div>
 
         <div class="container">
-          <div class="tab-content active" id="nav-classic-tab" role="tabpanel" aria-labelledby="tab-classic" tabindex="0">
+          <div class="tab-content active" id="nav-classic-tab" role="tabpanel" aria-labelledby="tab-classic">
             <div class="feature__image">
               <img
                 src="assets/images/illus-classic.webp"
@@ -332,7 +336,7 @@
               </p>
             </div>
           </div>
-          <div class="tab-content" id="nav-motopeyk-tab" role="tabpanel" aria-labelledby="tab-motopeyk" tabindex="0">
+          <div class="tab-content" id="nav-motopeyk-tab" role="tabpanel" aria-labelledby="tab-motopeyk">
             <div class="feature__image">
               <img
                 src="assets/images/illus-motopeyk.webp"
@@ -352,7 +356,7 @@
               </p>
             </div>
           </div>
-          <div class="tab-content" id="nav-autopeyk-tab" role="tabpanel" aria-labelledby="tab-autopeyk" tabindex="0">
+          <div class="tab-content" id="nav-autopeyk-tab" role="tabpanel" aria-labelledby="tab-autopeyk">
             <div class="feature__image">
               <img
                 src="assets/images/illus-autopeyk.webp"
@@ -373,7 +377,7 @@
               </p>
             </div>
           </div>
-          <div class="tab-content" id="nav-plus-tab" role="tabpanel" aria-labelledby="tab-plus" tabindex="0">
+          <div class="tab-content" id="nav-plus-tab" role="tabpanel" aria-labelledby="tab-plus">
             <div class="feature__image">
               <img
                 src="assets/images/illus-plus.webp"
@@ -394,7 +398,7 @@
               </p>
             </div>
           </div>
-          <div class="tab-content" id="nav-tel-tab" role="tabpanel" aria-labelledby="tab-tel" tabindex="0">
+          <div class="tab-content" id="nav-tel-tab" role="tabpanel" aria-labelledby="tab-tel">
             <div class="feature__image">
               <img
                 src="assets/images/illus-tel.webp"
@@ -415,7 +419,7 @@
               </p>
             </div>
           </div>
-          <div class="tab-content" id="nav-hamyar-tab" role="tabpanel" aria-labelledby="tab-hamyar" tabindex="0">
+          <div class="tab-content" id="nav-hamyar-tab" role="tabpanel" aria-labelledby="tab-hamyar">
             <div class="feature__image">
               <img
                 src="assets/images/illus-hamyar.webp"
@@ -435,7 +439,7 @@
               </p>
             </div>
           </div>
-          <div class="tab-content" id="nav-line-tab" role="tabpanel" aria-labelledby="tab-line" tabindex="0">
+          <div class="tab-content" id="nav-line-tab" role="tabpanel" aria-labelledby="tab-line">
             <div class="feature__image">
               <img
                 src="assets/images/illus-line.webp"
@@ -807,7 +811,7 @@
                   aria-hidden="true" />
 
                 <button type="submit" class="btn btn--primary">ثبت نظر</button>
-                <p class="form-status" id="contact-status" role="status" aria-live="polite"></p>
+                <output class="form-status" id="contact-status" aria-live="polite"></output>
               </form>
             </div>
           </div>
@@ -831,10 +835,9 @@
         <div
           class="travel__slides"
           data-carousel
-          tabindex="0"
-          role="group"
+          role="region"
           aria-roledescription="carousel"
-          aria-label="جوایز ویژه">
+          aria-label="کارت‌های جوایز ویژه">
           <article class="travel__slide">
             <div class="slide__img">
               <picture>
@@ -1023,7 +1026,7 @@
       <svg class="icon" aria-hidden="true"><use href="assets/images/svg-sprite.svg#arrow-up"></use></svg>
     </button>
 
-    <div class="toast-region" id="toast-region" role="status" aria-live="polite"></div>
+    <output class="toast-region" id="toast-region" aria-live="polite"></output>
 
     <script defer src="js/modules/feedback.js"></script>
     <script defer src="js/modules/nav.js"></script>

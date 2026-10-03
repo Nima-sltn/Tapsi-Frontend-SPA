@@ -1,7 +1,8 @@
 /**
  * Toast notifications.
  *
- * Provides lightweight, accessible feedback (`role="status"` live region)
+ * Provides lightweight, accessible feedback (an `<output>` live region,
+ * whose implicit role is `status`)
  * and wires up every declarative `[data-toast]` trigger in the document.
  *
  * @namespace Tapsi.feedback

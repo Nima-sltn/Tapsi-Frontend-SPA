@@ -926,6 +926,8 @@ textarea {
   justify-content: space-between;
   overflow: auto;
   padding: 5px 0 15px;
+  scroll-snap-type: x proximity;
+  scrollbar-width: thin;
 }
 .services__tabs .tab {
   background: none;
@@ -938,7 +940,9 @@ textarea {
   align-items: center;
   max-width: 100px;
   border-radius: var(--radius-md);
-  transition: background-color var(--transition-fast), transform var(--transition-fast);
+  opacity: 0.5;
+  scroll-snap-align: center;
+  transition: all 0.2s ease-out;
 }
 .services__tabs .tab__label {
   margin-top: 1.5rem;
@@ -947,10 +951,6 @@ textarea {
 .services__tabs img {
   max-width: 85px;
   height: auto;
-}
-.services__tabs .tab {
-  opacity: 0.5;
-  transition: all 0.2s ease-out;
 }
 .services__tabs .tab:hover {
   opacity: 1;
@@ -1026,12 +1026,17 @@ textarea {
   align-items: center;
   overflow-x: auto;
   padding-bottom: 1rem;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 .travel__slide {
   flex: 0 0 280px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  scroll-snap-align: start;
 }
 .travel__slide:not(:last-child) {
   margin-left: 2rem;
@@ -1355,28 +1360,8 @@ textarea {
   cursor: not-allowed;
 }
 
-.travel__slides {
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
 .travel__slides::-webkit-scrollbar {
   display: none;
-}
-
-.travel__slide {
-  scroll-snap-align: start;
-}
-
-.services__tabs {
-  scroll-snap-type: x proximity;
-  scrollbar-width: thin;
-}
-
-.services__tabs .tab {
-  scroll-snap-align: center;
 }
 
 .services__tabs .tab.active {
@@ -1645,6 +1630,7 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .form-status {
+  display: block;
   min-height: 2rem;
   margin-top: 1rem;
   font-size: 1.4rem;

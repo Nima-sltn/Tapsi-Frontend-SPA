@@ -39,7 +39,7 @@ const MIME_TYPES = {
 
 /**
  * @param {string} urlPath Request path (decoded, query-free).
- * @returns {string|null} Absolute file path, or null when unsafe/missing.
+ * @returns {Promise<string|null>} Absolute file path, or null when unsafe/missing.
  */
 async function resolveFile(urlPath) {
   const decoded = decodeURIComponent(urlPath.split("?")[0]);
