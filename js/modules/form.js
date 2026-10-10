@@ -90,6 +90,18 @@
     var form = document.getElementById("contact-form");
     if (!form) return;
 
+    /**
+     * Publishes the outcome of a submission attempt on the event bus so
+     * other domains (toasts, analytics, future API layer) can react without
+     * this module importing them.
+     * @param {string} outcome
+     * @param {Object} [detail]
+     */
+    var announce = function (outcome, detail) {
+      if (!global.Tapsi || !global.Tapsi.bus) return;
+      global.Tapsi.bus.emit("form:submit", Object.assign({ outcome: outcome }, detail || {}));
+    };
+
     var status = document.getElementById("contact-status");
     var fields = ["contact-name", "contact-email", "contact-message"]
       .map(function (id) {
@@ -124,6 +136,7 @@
       // Honeypot tripped: pretend success, never process the payload.
       if (values.company) {
         if (status) status.textContent = "نظر شما با موفقیت ثبت شد.";
+        announce("ignored");
         form.reset();
         return;
       }
@@ -135,10 +148,13 @@
       var invalid = Object.keys(errors);
       if (invalid.length) {
         if (status) status.textContent = "لطفاً خطاهای مشخص‌شده را برطرف کنید.";
+        announce("invalid", { errors: errors });
         var first = document.getElementById("contact-" + invalid[0]);
         if (first) first.focus();
         return;
       }
+
+      announce("valid");
 
       if (status) status.textContent = "نظر شما با موفقیت ثبت شد. (نسخه دمو)";
       if (global.Tapsi && global.Tapsi.feedback) {

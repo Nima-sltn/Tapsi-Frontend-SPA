@@ -10,7 +10,7 @@
  *
  * Bump CACHE_VERSION whenever a precached asset changes.
  */
-const CACHE_VERSION = "tapsi-shell-v3";
+const CACHE_VERSION = "tapsi-shell-v5";
 
 const PRECACHE_ASSETS = [
   "./",
@@ -18,6 +18,9 @@ const PRECACHE_ASSETS = [
   "css/style.css",
   "css/fonts.css",
   "js/main.js",
+  "js/modules/bus.js",
+  "js/modules/accordion.js",
+  "js/modules/compare.js",
   "js/modules/feedback.js",
   "js/modules/nav.js",
   "js/modules/tabs.js",

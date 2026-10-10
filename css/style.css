@@ -693,19 +693,70 @@ textarea {
   flex-wrap: wrap;
   padding: 1rem 2rem;
 }
+/*
+ * Mobile menu = slide-in sidebar (drawer).
+ *
+ * The panel is fixed to the inline-start edge (right in RTL), hidden with
+ * a transform instead of `max-height` so the animation is compositor-friendly
+ * and the item count can never clip. `visibility` keeps it out of the tab
+ * order while closed. A JS-managed backdrop (`.nav-backdrop`) dims the page,
+ * and `body.nav-open` locks background scrolling.
+ */
 .nav__list {
-  width: 100%;
+  position: fixed;
+  inset-block: 0;
+  inset-inline-start: 0;
+  width: min(320px, 86vw);
   display: flex;
   flex-direction: column;
-  font-size: 1.4rem;
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  transition: all 0.3s linear;
-}
-.nav.nav__expanded .nav__list {
-  max-height: 100vh;
+  gap: 0.4rem;
+  padding: calc(var(--header-height) + 2rem) 2rem 2.4rem;
+  font-size: 1.5rem;
+  background-color: var(--color-surface);
+  border-inline-end: 1px solid var(--color-border);
+  box-shadow: var(--shadow-lg);
+  overflow-y: auto;
+  overscroll-behavior: contain;
   opacity: 1;
+  visibility: hidden;
+  transform: translateX(var(--drawer-offscreen, 100%));
+  transition: transform var(--transition-base), visibility 0s linear 0.3s;
+  will-change: transform;
+}
+
+[dir="rtl"] .nav__list {
+  --drawer-offscreen: 100%;
+}
+[dir="ltr"] .nav__list {
+  --drawer-offscreen: -100%;
+}
+
+.nav.nav__expanded .nav__list {
+  visibility: visible;
+  transform: translateX(0);
+  transition: transform var(--transition-base), visibility 0s linear 0s;
+}
+
+/* Backdrop: created by nav.js, sits below the sticky header (z-index 40). */
+.nav-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 39;
+  background-color: rgba(8, 10, 18, 0.55);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--transition-base), visibility 0s linear 0.3s;
+  touch-action: none;
+}
+
+.nav-backdrop.is-open {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity var(--transition-base), visibility 0s linear 0s;
+}
+
+body.nav-open {
+  overflow: hidden;
 }
 .nav__item {
   border-bottom: 1px solid var(--color-border);
@@ -742,12 +793,26 @@ textarea {
   .nav__toggler {
     display: none;
   }
+  /* Desktop resets: the drawer rules above must leave no trace. */
   .nav__list {
+    position: static;
+    inset: auto;
     flex-direction: row;
     width: auto;
+    height: auto;
     align-items: center;
+    gap: 0;
+    padding: 0;
+    font-size: 1.6rem;
+    background: none;
+    border: 0;
+    box-shadow: none;
+    overflow: visible;
     opacity: 1;
-    max-height: 100%;
+    visibility: visible;
+    transform: none;
+    transition: none;
+    will-change: auto;
   }
   .nav__item {
     margin-right: 2rem;
@@ -783,16 +848,17 @@ textarea {
   border-radius: 5px;
   transition: all 0.2s linear;
 }
+/* Bars are 3px tall with 5px gaps → centres sit 8px apart, so translating
+   each outer bar by ±8px lands both ends exactly on the middle bar. */
 .nav.nav__expanded .bar-one {
-  transform: rotate(-45deg) translate(-8px, 6px);
-  margin: 8px 0;
+  transform: translateY(8px) rotate(-45deg);
 }
 .nav.nav__expanded .bar-two {
   opacity: 0;
+  transform: scaleX(0.2);
 }
 .nav.nav__expanded .bar-three {
-  transform: rotate(45deg) translate(-9px, -8px);
-  margin: 8px 0;
+  transform: translateY(-8px) rotate(45deg);
 }
 
 /* hero section */
@@ -1698,11 +1764,227 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .no-js .nav__list {
-  max-height: 100vh;
+  position: static;
+  width: 100%;
+  height: auto;
+  gap: 0;
+  padding: 1rem 0 0;
+  background: none;
+  border: 0;
+  box-shadow: none;
+  overflow: visible;
   opacity: 1;
+  visibility: visible;
+  transform: none;
 }
 
 .no-js .nav__toggler,
 .no-js .carousel-controls {
   display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav__list,
+  .nav-backdrop,
+  .bar {
+    transition: none;
+  }
+}
+
+/* =========================================================
+   FAQ ACCORDION
+   ========================================================= */
+
+.faq__list {
+  max-width: 820px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.faq__item {
+  border: 1px solid var(--color-border-soft);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.faq__item:focus-within {
+  border-color: var(--color-primary);
+  box-shadow: var(--focus-ring);
+}
+
+.faq__heading {
+  margin: 0;
+  font-size: inherit;
+}
+
+.faq__question {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.6rem;
+  padding: 1.6rem 2rem;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  text-align: start;
+  font-family: inherit;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.7;
+  color: var(--color-heading);
+  transition: color var(--transition-fast);
+}
+
+.faq__question:hover {
+  color: var(--color-primary);
+}
+
+.faq__chevron {
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  color: var(--color-primary);
+  transition: transform var(--transition-base);
+}
+
+/* "<" rotated a quarter turn counter-clockwise points down. */
+.faq__question[aria-expanded="true"] .faq__chevron {
+  transform: rotate(-90deg);
+}
+
+.faq__answer {
+  padding: 0 2rem 1.8rem;
+  font-size: 1.4rem;
+  color: var(--color-body);
+}
+
+.faq__answer[hidden] {
+  display: none;
+}
+
+/* Without JS the buttons cannot expand anything — show every answer.
+   `!important` is required: the UA stylesheet wins over normal author
+   declarations for the `hidden` attribute. */
+.no-js .faq__answer[hidden] {
+  display: block !important;
+}
+
+/* =========================================================
+   FARE COMPARISON CHART
+   ========================================================= */
+
+.compare {
+  margin-top: 3rem;
+  padding: 2.4rem;
+  border: 1px solid var(--color-border-soft);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.compare__title {
+  font-size: 1.8rem;
+  margin-bottom: 0.4rem;
+}
+
+.compare__subtitle {
+  margin-bottom: 1.8rem;
+  font-size: 1.3rem;
+  color: var(--color-muted);
+}
+
+.compare__list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.compare__row {
+  display: grid;
+  grid-template-columns: minmax(100px, 150px) minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1.2rem;
+  font-size: 1.3rem;
+}
+
+.compare__label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  font-weight: 700;
+  color: var(--color-heading);
+}
+
+.compare__tag {
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: var(--color-primary);
+}
+
+.compare__track {
+  height: 10px;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-surface-alt);
+  border: 1px solid var(--color-border-soft);
+  overflow: hidden;
+}
+
+.compare__bar {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background-image: linear-gradient(90deg, var(--color-primary-light), var(--color-primary));
+  transition: width var(--transition-base);
+}
+
+.compare__row.is-current .compare__bar {
+  background-image: linear-gradient(90deg, var(--color-secondary-dark), var(--color-primary-dark));
+}
+
+.compare__row.is-current .compare__label {
+  color: var(--color-primary);
+}
+
+.compare__value {
+  font-weight: 700;
+  color: var(--color-heading);
+  font-variant-numeric: tabular-nums;
+}
+
+.compare__row--empty {
+  display: block;
+  color: var(--color-muted);
+}
+
+@media screen and (max-width: 480px) {
+  .compare__row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "label value"
+      "track track";
+    row-gap: 0.6rem;
+  }
+  .compare__label {
+    grid-area: label;
+  }
+  .compare__value {
+    grid-area: value;
+  }
+  .compare__track {
+    grid-area: track;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .compare__bar,
+  .faq__chevron {
+    transition: none;
+  }
 }

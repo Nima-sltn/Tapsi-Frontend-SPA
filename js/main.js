@@ -3,7 +3,13 @@
  *
  * Loads every feature module defensively: one failing module never takes
  * the rest of the page down. Order matters only where a module consumes
- * another (`calculator` needs `fare`, success toasts need `feedback`).
+ * another (`calculator` needs `fare`, success toasts need `feedback`); the
+ * `bus` loads first because it is the decoupling layer every other module
+ * publishes to.
+ *
+ * Boot completes asynchronously: `Tapsi.ready` is a Promise resolving with
+ * the initialised registry, and an `app:ready` event is published on the
+ * bus for code that needs to wait for a fully booted page.
  *
  * @namespace Tapsi
  */
@@ -11,8 +17,10 @@
   "use strict";
 
   var MODULES = [
+    "bus",
     "feedback",
     "nav",
+    "accordion",
     "tabs",
     "theme",
     "reveal",
@@ -24,13 +32,17 @@
 
   function boot() {
     var tapsi = global.Tapsi || {};
+    var started = [];
+    var failed = [];
 
     MODULES.forEach(function (name) {
       var module = tapsi[name];
       if (!module || typeof module.init !== "function") return;
       try {
         module.init();
+        started.push(name);
       } catch (error) {
+        failed.push(name);
         if (global.console && console.error) {
           console.error("[tapsi] module \"" + name + "\" failed to initialise", error);
         }
@@ -38,6 +50,12 @@
     });
 
     registerServiceWorker();
+
+    // Promise-based readiness contract: consumers can chain
+    // `Tapsi.ready.then(...)` or await `Tapsi.bus.once("app:ready")`.
+    var status = { modules: started, failed: failed, at: Date.now() };
+    tapsi.ready = Promise.resolve(status);
+    if (tapsi.bus) tapsi.bus.emit("app:ready", status);
   }
 
   /**

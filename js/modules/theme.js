@@ -24,6 +24,7 @@
    * @param {"light"|"dark"} theme Theme to apply.
    */
   function applyTheme(theme) {
+    var previous = document.documentElement.dataset.theme;
     document.documentElement.dataset.theme = theme;
     var dark = theme === "dark";
 
@@ -36,6 +37,12 @@
       global.localStorage.setItem(STORAGE_KEY, theme);
     } catch (error) {
       /* storage disabled (private mode) — theme still applies for this visit */
+    }
+
+    // Announce the transition to any interested module (progress, reveal, …)
+    // without importing any of them — the bus keeps the domains decoupled.
+    if (previous !== theme && global.Tapsi && global.Tapsi.bus) {
+      global.Tapsi.bus.emit("theme:change", { theme: theme, previous: previous || null });
     }
   }
 

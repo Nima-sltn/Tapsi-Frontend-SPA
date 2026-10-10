@@ -4,6 +4,11 @@
  * Implements the APG tabs pattern: roving tabindex, `aria-selected`,
  * arrow-key navigation (mirrored for RTL) and Home/End support.
  *
+ * Deep linking: activating a tab mirrors its id into the URL hash
+ * (`#tab-plus`) with `history.replaceState` — no history spam, but every
+ * tab state is shareable — and a matching hash selects its tab on load and
+ * on `hashchange` (back/forward between anchors keeps working).
+ *
  * @namespace Tapsi.tabs
  */
 (function (global) {
@@ -12,12 +17,32 @@
   var tabs = [];
 
   /**
+   * Writes the active tab id into the URL hash without adding an entry.
+   * @param {HTMLElement} tab
+   */
+  function syncHash(tab) {
+    if (!global.history || !global.history.replaceState) return;
+    var next = "#" + tab.id;
+    if (global.location.hash === next) return;
+    try {
+      global.history.replaceState(null, "", next);
+    } catch (error) {
+      /* sandboxed/`file://` context: deep linking degrades to nothing */
+    }
+  }
+
+  /**
    * Activates a tab and its panel.
    * @param {HTMLElement} tab Tab button to activate.
    * @param {boolean} [focus] Whether to move focus to the tab.
+   * @param {boolean} [updateUrl] Whether to mirror the choice into the hash.
    */
-  function activate(tab, focus) {
+  function activate(tab, focus, updateUrl) {
     if (!tab) return;
+
+    var previous = tabs.filter(function (candidate) {
+      return candidate.getAttribute("aria-selected") === "true";
+    })[0];
 
     tabs.forEach(function (candidate) {
       var selected = candidate === tab;
@@ -31,6 +56,14 @@
     });
 
     if (focus) tab.focus();
+    if (updateUrl) syncHash(tab);
+
+    if (previous !== tab && global.Tapsi && global.Tapsi.bus) {
+      global.Tapsi.bus.emit("tabs:change", {
+        id: tab.id,
+        panel: tab.getAttribute("aria-controls")
+      });
+    }
   }
 
   /**
@@ -50,19 +83,19 @@
 
     if (event.key === "Home") {
       event.preventDefault();
-      activate(tabs[0], true);
+      activate(tabs[0], true, true);
       return;
     }
     if (event.key === "End") {
       event.preventDefault();
-      activate(tabs[tabs.length - 1], true);
+      activate(tabs[tabs.length - 1], true, true);
       return;
     }
     if (forward === null) return;
 
     event.preventDefault();
     var next = (index + (forward ? 1 : -1) + tabs.length) % tabs.length;
-    activate(tabs[next], true);
+    activate(tabs[next], true, true);
   }
 
   function init() {
@@ -71,7 +104,7 @@
 
     tabs.forEach(function (tab) {
       tab.addEventListener("click", function () {
-        activate(tab, false);
+        activate(tab, false, true);
       });
 
       tab.addEventListener("keydown", function (event) {
@@ -83,7 +116,21 @@
     var initial = tabs.filter(function (tab) {
       return tab.getAttribute("aria-selected") === "true";
     })[0];
-    activate(initial || tabs[0], false);
+
+    // Deep link wins over the markup default: `#tab-tel` opens that tab.
+    var hash = global.location ? global.location.hash.slice(1) : "";
+    var fromHash = hash && document.getElementById(hash);
+    var startIndex = fromHash && fromHash.getAttribute("role") === "tab" ? fromHash : initial || tabs[0];
+    activate(startIndex, false, false);
+
+    // Back/forward between anchors (and shared URLs) re-syncs the tabs.
+    global.addEventListener("hashchange", function () {
+      var id = global.location.hash.slice(1);
+      var target = id && document.getElementById(id);
+      if (target && target.getAttribute("role") === "tab" && target !== document.querySelector('[role="tab"][aria-selected="true"]')) {
+        activate(target, false, false);
+      }
+    });
   }
 
   var api = { init: init, activate: activate };

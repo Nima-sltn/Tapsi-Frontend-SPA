@@ -1,31 +1,103 @@
 /**
- * Mobile navigation + scroll-spy.
+ * Mobile navigation drawer + scroll-spy.
  *
- * - Accessible disclosure toggler (`aria-expanded` / `aria-controls`)
- * - Closes on Escape, on link activation and when leaving the mobile breakpoint
- * - Marks the section currently in view with `aria-current="true"`
+ * Behaviour
+ *  - Accessible disclosure toggler (`aria-expanded` / `aria-controls`)
+ *  - Slide-in sidebar with a dimming backdrop; background scrolling is locked
+ *    while open (`body.nav-open`)
+ *  - Focus is trapped between the toggler and the menu links; Escape and
+ *    backdrop clicks close the drawer and return focus to the toggler.
+ *    APG disclosure pattern: opening keeps focus on the toggler, and Tab then
+ *    walks into the menu because the list follows the toggler in DOM order.
+ *  - Closes on link activation and when leaving the mobile breakpoint
+ *  - Publishes `nav:toggle` on the event bus so other domains can react
+ *  - Marks the section currently in view with `aria-current="true"`
  *
  * @namespace Tapsi.nav
  */
 (function (global) {
   "use strict";
 
-  var MOBILE_QUERY = "(min-width: 769px)";
+  // Matches the CSS breakpoint (min-width: 768px) exactly.
+  var MOBILE_QUERY = "(min-width: 768px)";
   var toggler = null;
   var nav = null;
   var menu = null;
+  var backdrop = null;
 
   /**
-   * @param {boolean} expanded Whether the menu is open.
+   * Publishes a state change on the bus (fire-and-forget Promise).
+   * @param {string} topic
+   * @param {Object} payload
    */
-  function setExpanded(expanded) {
-    if (!toggler || !nav) return;
-    nav.classList.toggle("nav__expanded", expanded);
-    toggler.setAttribute("aria-expanded", expanded ? "true" : "false");
+  function publish(topic, payload) {
+    if (global.Tapsi && global.Tapsi.bus) global.Tapsi.bus.emit(topic, payload);
   }
 
   function isExpanded() {
     return !!nav && nav.classList.contains("nav__expanded");
+  }
+
+  /**
+   * Opens or closes the drawer.
+   * @param {boolean} expanded Whether the menu should be open.
+   * @param {{refocus?: boolean}} [options] `refocus` returns focus to the
+   *   toggler (Escape/backdrop); link clicks skip it so the page scroll is
+   *   not fought by the browser.
+   */
+  function setExpanded(expanded, options) {
+    if (!toggler || !nav) return;
+    expanded = !!expanded;
+    if (expanded === isExpanded()) return;
+
+    nav.classList.toggle("nav__expanded", expanded);
+    toggler.setAttribute("aria-expanded", expanded ? "true" : "false");
+    document.body.classList.toggle("nav-open", expanded);
+
+    if (backdrop) backdrop.classList.toggle("is-open", expanded);
+
+    if (options && options.refocus) toggler.focus();
+    publish("nav:toggle", { open: expanded });
+  }
+
+  /** @returns {Element[]} Toggler + every menu link, in DOM order. */
+  function focusables() {
+    var links = menu ? Array.prototype.slice.call(menu.querySelectorAll("a[href]")) : [];
+    return [toggler].concat(links);
+  }
+
+  /**
+   * Cycles Tab/Shift+Tab inside the drawer (toggler ↔ links) while open.
+   * @param {KeyboardEvent} event
+   */
+  function trapFocus(event) {
+    var items = focusables();
+    var first = items[0];
+    var last = items[items.length - 1];
+    var active = document.activeElement;
+    var inside = items.indexOf(active) !== -1;
+
+    if (event.shiftKey) {
+      if (!inside || active === first) {
+        event.preventDefault();
+        last.focus();
+      }
+    } else if (!inside || active === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  }
+
+  /** Creates the click-catcher used on mobile only. */
+  function createBackdrop() {
+    var element = document.createElement("div");
+    element.className = "nav-backdrop";
+    element.setAttribute("aria-hidden", "true");
+    element.addEventListener("click", function () {
+      setExpanded(false, { refocus: true });
+    });
+    document.body.appendChild(element);
+    return element;
   }
 
   /** Highlights the nav link of the section currently in the viewport. */
@@ -74,21 +146,25 @@
 
     if (!toggler || !nav || !menu) return;
 
+    backdrop = createBackdrop();
+
     toggler.addEventListener("click", function () {
       setExpanded(!isExpanded());
     });
 
-    // Close when a destination is chosen.
+    // Close when a destination is chosen (no refocus: the page scrolls there).
     menu.addEventListener("click", function (event) {
       if (event.target.closest("a")) setExpanded(false);
     });
 
-    // Close on Escape and return focus to the toggler.
     document.addEventListener("keydown", function (event) {
-      if (event.key === "Escape" && isExpanded()) {
-        setExpanded(false);
-        toggler.focus();
+      if (!isExpanded()) return;
+
+      if (event.key === "Escape") {
+        setExpanded(false, { refocus: true });
+        return;
       }
+      if (event.key === "Tab") trapFocus(event);
     });
 
     // Leaving the mobile breakpoint must not leave the menu stuck open.
@@ -105,7 +181,7 @@
     initScrollSpy();
   }
 
-  var api = { init: init, setExpanded: setExpanded };
+  var api = { init: init, setExpanded: setExpanded, isExpanded: isExpanded };
 
   if (typeof module !== "undefined" && module.exports) {
     module.exports = api;

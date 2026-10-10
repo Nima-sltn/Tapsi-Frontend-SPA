@@ -153,6 +153,7 @@
 
         <ul class="list nav__list" id="nav-menu">
           <li class="nav__item"><a href="#contact">پشتیبانی</a></li>
+          <li class="nav__item"><a href="#faq">پرسش‌های متداول</a></li>
           <li class="nav__item"><a href="#business">خدمات کسب و کارها</a></li>
           <li class="nav__item"><a href="#footer">فرصت های شغلی</a></li>
           <li class="nav__item"><a href="#offers">وبلاگ</a></li>
@@ -617,6 +618,19 @@
             </p>
           </div>
         </div>
+
+        <div class="compare" id="fare-compare">
+          <h3 class="compare__title">مقایسه قیمت همه سرویس‌ها</h3>
+          <p class="compare__subtitle">
+            برای همین مسافت و همین زمان درخواست؛ با تغییر اسلایدرها به‌روز
+            می‌شود.
+          </p>
+          <ul class="compare__list" id="fare-compare-list">
+            <li class="compare__row compare__row--empty">
+              برای دیدن مقایسه، جاوااسکریپت مرورگر خود را فعال کنید.
+            </li>
+          </ul>
+        </div>
       </section>
 
       <!-- Plans -->
@@ -702,6 +716,156 @@
                 </button>
               </div>
             </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ (accessible accordion) -->
+      <section class="container block faq" id="faq" aria-labelledby="faq-title">
+        <h2 class="block__heading" id="faq-title">پرسش‌های متداول</h2>
+        <p class="section-lead">
+          پاسخ پرتکرارترین پرسش‌های مسافران، سفیران و کسب‌وکارها؛ اگر پاسخ خود
+          را نیافتید، با پشتیبانی در تماس باشید.
+        </p>
+
+        <div class="faq__list" data-accordion>
+          <div class="faq__item">
+            <h3 class="faq__heading">
+              <button
+                type="button"
+                class="faq__question"
+                id="faq-q1"
+                aria-expanded="false"
+                aria-controls="faq-a1">
+                <span>تپسی چه سرویس‌هایی ارائه می‌دهد؟</span>
+                <svg class="icon faq__chevron" aria-hidden="true">
+                  <use href="assets/images/svg-sprite.svg#chevron-left"></use>
+                </svg>
+              </button>
+            </h3>
+            <div class="faq__answer" id="faq-a1" hidden>
+              <p>
+                تپسی کلاسیک، تپسی پلاس، موتوپیک، اتوپیک، تپسی لاین، همیار و
+                تپسی تلفنی (۱۶۳۰). هر سرویس را می‌توانید در بخش «سرویس‌های تپسی»
+                با جزئیات کامل ببینید.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq__item">
+            <h3 class="faq__heading">
+              <button
+                type="button"
+                class="faq__question"
+                id="faq-q2"
+                aria-expanded="false"
+                aria-controls="faq-a2">
+                <span>چطور هزینه سفرم را از قبل تخمین بزنم؟</span>
+                <svg class="icon faq__chevron" aria-hidden="true">
+                  <use href="assets/images/svg-sprite.svg#chevron-left"></use>
+                </svg>
+              </button>
+            </h3>
+            <div class="faq__answer" id="faq-a2" hidden>
+              <p>
+                در بخش «محاسبه‌گر کرایه سفر» سرویس، مسافت و مدت زمان را مشخص کنید؛
+                کرایه تقریبی به‌تفکیک نمایش داده می‌شود و نمودار مقایسه‌ای همه
+                سرویس‌ها را برای همان مسیر می‌بینید. مقادیر شما در همین مرورگر
+                ذخیره می‌شود و دفعه بعد بازیابی می‌شود.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq__item">
+            <h3 class="faq__heading">
+              <button
+                type="button"
+                class="faq__question"
+                id="faq-q3"
+                aria-expanded="false"
+                aria-controls="faq-a3">
+                <span>در یک سفر می‌توانم چند مقصد یا توقف مشخص کنم؟</span>
+                <svg class="icon faq__chevron" aria-hidden="true">
+                  <use href="assets/images/svg-sprite.svg#chevron-left"></use>
+                </svg>
+              </button>
+            </h3>
+            <div class="faq__answer" id="faq-a3" hidden>
+              <p>
+                بله. در سرویس‌های کلاسیک، پلاس و تلفنی امکان تعیین دو یا چند
+                مقصد و توقف در مسیر وجود دارد؛ در سرویس‌های پیکی، مرسوله شما
+                به‌صورت لحظه‌ای روی نقشه قابل رصد است.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq__item">
+            <h3 class="faq__heading">
+              <button
+                type="button"
+                class="faq__question"
+                id="faq-q4"
+                aria-expanded="false"
+                aria-controls="faq-a4">
+                <span>چطور می‌توانم راننده یا پیک تپسی شوم؟</span>
+                <svg class="icon faq__chevron" aria-hidden="true">
+                  <use href="assets/images/svg-sprite.svg#chevron-left"></use>
+                </svg>
+              </button>
+            </h3>
+            <div class="faq__answer" id="faq-a4" hidden>
+              <p>
+                از بخش «ثبت نام راننده» در بالای صفحه فرم ثبت‌نام را باز کنید و
+                مدارک خودرو و گواهی‌نامه را ارسال کنید. پس از تأیید، تیم پشتیبانی
+                با شما تماس می‌گیرد.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq__item">
+            <h3 class="faq__heading">
+              <button
+                type="button"
+                class="faq__question"
+                id="faq-q5"
+                aria-expanded="false"
+                aria-controls="faq-a5">
+                <span>پنل سازمانی برای چه کسب‌وکارهایی مناسب است؟</span>
+                <svg class="icon faq__chevron" aria-hidden="true">
+                  <use href="assets/images/svg-sprite.svg#chevron-left"></use>
+                </svg>
+              </button>
+            </h3>
+            <div class="faq__answer" id="faq-a5" hidden>
+              <p>
+                برای هر سازمانی که مأموریت‌های درون‌شهری یا ارسال کالا دارد:
+                درخواست همزمان خودرو و پیک، گزارش ماهانه و کد اعتبار برای
+                کارکنان، همه از یک پنل وب مدیریت می‌شود.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq__item">
+            <h3 class="faq__heading">
+              <button
+                type="button"
+                class="faq__question"
+                id="faq-q6"
+                aria-expanded="false"
+                aria-controls="faq-a6">
+                <span>بدون اینترنت هم می‌توانم خودرو درخواست بدهم؟</span>
+                <svg class="icon faq__chevron" aria-hidden="true">
+                  <use href="assets/images/svg-sprite.svg#chevron-left"></use>
+                </svg>
+              </button>
+            </h3>
+            <div class="faq__answer" id="faq-a6" hidden>
+              <p>
+                بله، با سرویس تلفنی تپسی (۱۶۳۰) بدون نیاز به اینترنت و
+                اپلیکیشن درخواست خودرو بدهید. همچین این سایت به‌صورت آفلاین
+                نیز در دسترس می‌ماند.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -832,10 +996,9 @@
           </div>
         </div>
 
-        <div
+        <section
           class="travel__slides"
           data-carousel
-          role="region"
           aria-roledescription="carousel"
           aria-label="کارت‌های جوایز ویژه">
           <article class="travel__slide">
@@ -957,7 +1120,7 @@
               </div>
             </div>
           </article>
-        </div>
+        </section>
       </section>
     </main>
 
@@ -990,7 +1153,7 @@
           <h3 id="footer-passengers">مسافران</h3>
           <a href="#home">دانلود اپ مسافر</a>
           <a href="#home">نسخه وب تپسی</a>
-          <a href="#services">پرسش های متداول مسافران</a>
+          <a href="#faq">پرسش های متداول مسافران</a>
           <a href="#plans">شرایط و قوانین مسافران</a>
           <a href="#plans">باشگاه مشتریان</a>
         </nav>
@@ -998,7 +1161,7 @@
           <h3 id="footer-drivers">رانندگان</h3>
           <a href="#home">دانلود اپ سفیر</a>
           <a href="#home">ثبت نام راننده تاکسی</a>
-          <a href="#services">پرسش های متداول سفیران</a>
+          <a href="#faq">پرسش های متداول سفیران</a>
           <a href="#plans">شرایط و قوانین سفیران</a>
           <a href="#plans">باشگاه سفیران</a>
         </nav>
@@ -1028,14 +1191,17 @@
 
     <output class="toast-region" id="toast-region" aria-live="polite"></output>
 
+    <script defer src="js/modules/bus.js"></script>
     <script defer src="js/modules/feedback.js"></script>
     <script defer src="js/modules/nav.js"></script>
+    <script defer src="js/modules/accordion.js"></script>
     <script defer src="js/modules/tabs.js"></script>
     <script defer src="js/modules/theme.js"></script>
     <script defer src="js/modules/reveal.js"></script>
     <script defer src="js/modules/carousel.js"></script>
     <script defer src="js/modules/form.js"></script>
     <script defer src="js/modules/fare.js"></script>
+    <script defer src="js/modules/compare.js"></script>
     <script defer src="js/modules/calculator.js"></script>
     <script defer src="js/modules/progress.js"></script>
     <script defer src="js/main.js"></script>
