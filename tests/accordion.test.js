@@ -3,10 +3,10 @@
  * the DOM out of Node, so only the helper is exercised here).
  * Run with: npm test  (node --test tests/)
  */
-const test = require("node:test");
-const assert = require("node:assert/strict");
+import test from "node:test";
+import assert from "node:assert/strict";
 
-const accordion = require("../js/modules/accordion.js");
+import * as accordion from "../dist/modules/accordion.js";
 
 test("ArrowDown and ArrowUp cycle through the questions", () => {
   assert.equal(accordion.nextIndex(4, 0, "ArrowDown"), 1);
@@ -31,8 +31,17 @@ test("an empty group never produces an index", () => {
   assert.equal(accordion.nextIndex(0, 0, "Home"), null);
 });
 
+test("isOpen reads the aria-expanded state", () => {
+  const stub = (value) => ({ getAttribute: () => value });
+  assert.equal(accordion.isOpen(stub("true")), true);
+  assert.equal(accordion.isOpen(stub("false")), false);
+  assert.equal(accordion.isOpen(stub(null)), false, "missing attribute counts as closed");
+});
+
 test("module exposes the expected public API", () => {
   assert.equal(typeof accordion.init, "function");
   assert.equal(typeof accordion.setOpen, "function");
+  assert.equal(typeof accordion.openExclusive, "function");
+  assert.equal(typeof accordion.isOpen, "function");
   assert.equal(typeof accordion.nextIndex, "function");
 });

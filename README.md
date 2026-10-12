@@ -11,8 +11,10 @@
 ## Description
 
 A redesign of the user interface (UI) of the Tapsi website: a **responsive,
-accessible, offline-capable static site** built with plain HTML, CSS and
-vanilla JavaScript — zero runtime dependencies, no framework, no build step.
+accessible, offline-capable static site** built with HTML, CSS and
+**strict TypeScript** — zero runtime dependencies, no framework. TypeScript
+compiles to plain ES modules in `dist/`, so the deployable artifact is still
+static files with no server and no bundler.
 
 ## Table of contents
 
@@ -37,6 +39,9 @@ vanilla JavaScript — zero runtime dependencies, no framework, no build step.
 - Light/dark theme applied pre-paint (no flash of the wrong theme)
 - Slide-in mobile sidebar: backdrop, scroll lock, focus trap, Escape to close
 - Deep-linkable service tabs (`#tab-plus` in the URL, shareable)
+- **Shareable trip links**: the fare calculator mirrors its state into the
+  URL (`?service=plus&km=12&min=30&time=peak`) with a one-click copy button;
+  a shared link restores exactly what the sender configured
 - Accessible FAQ accordion + cross-service fare comparison chart
 - Calculator persists your last trip in `localStorage` and restores it
 - Zero third-party requests — enforced by `npm run audit`
@@ -50,69 +55,90 @@ index.html  ── markup + ARIA semantics + declarative hooks (data-*)
    │
 css/        ── design tokens (CSS variables) → BEM components → sections
    │
-js/modules  ── UI domains: nav · tabs · theme · reveal · carousel ·
-   │           form · feedback · progress · calculator
+src/modules ── UI domains (TypeScript): nav · tabs · theme · reveal ·
+   │           carousel · form · feedback · progress · calculator · share
    │
-js/modules/bus.js ── event bus: the only channel between domains
+src/modules/bus.ts ── typed event bus: the only channel between domains
    │
-js/modules/fare.js ── pure fare domain (DOM-free, unit-tested)
+src/modules/fare.ts · compare.ts · share.ts ── pure domains (DOM-free)
+   │
+   └── tsc ──▶ dist/ (compiled ES modules — the deployable artifact)
 ```
 
 Rules:
 
 1. **UI modules never import each other** — they publish and subscribe on the
-   event bus instead (`theme:change`, `tabs:change`, `carousel:change`,
-   `form:submit`, `app:ready`).
-2. **Domain logic stays pure** — `fare.js` has no DOM access, so Node can
-   `require()` it and test it directly.
+   typed event bus instead (`theme:change`, `tabs:change`, `form:submit`,
+   `trip:share`, `app:ready`). The bus's `EventMap` makes every topic and
+   payload compile-time checked.
+2. **Domain logic stays pure** — `fare.ts`, `compare.ts` and `share.ts`
+   have no DOM access, so Node imports them and tests them directly.
 3. **Boot is defensive** — one failing module is logged and skipped; the rest
-   of the page still works.
+   of the page still works. `ready` is a Promise resolving with the boot
+   status.
+4. **`dist/` is generated** — never edit it by hand; `npm run build` rewrites
+   it from `src/` (clean + `tsc`), so a renamed module can never leave a
+   stale file in the shipped tree.
 
 Full details, the event catalogue and the Promise contracts live in
 [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md).
 
 ## Language features: lexical scoping & Promises
 
-Both requested language features are first-class citizens of the codebase,
-centred on [`js/modules/bus.js`](./js/modules/bus.js):
+Both language features are first-class citizens of the codebase, centred on
+[`src/modules/bus.ts`](./src/modules/bus.ts):
 
 **Lexical scoping** — every bus instance keeps its subscriber registry inside
 a factory closure. The registry is genuinely private: no code outside can
-enumerate, replace or leak it, and two buses share no state.
+enumerate, replace or leak it, and two buses share no state. TypeScript's
+structural typing reinforces the enclosure: the public `Bus` interface never
+exposes the registry's type.
 
-```js
-const bus = Tapsi.bus.createBus(); // its own private registry
-const off = bus.on("topic", handler); // `off` closes over its own listener
+```ts
+import { createBus } from "./modules/bus.js";
+
+const bus = createBus(); // its own private registry
+const off = bus.on("app:ready", (status) => console.log(status.modules));
 ```
 
 **Promises** — asynchronous work is expressed as values you can chain:
 
-```js
-Tapsi.ready.then((status) => console.log(status.modules)); // boot status
-await Tapsi.bus.once("app:ready", 2000); // wait for an event (rejects on timeout)
-await Tapsi.bus.emit("theme:change", { theme: "dark" }); // settles after every handler
-carousel.scrollByCard(rail, 1).then(sync); // resolves when the scroll settles
+```ts
+import { ready } from "./main.js";
+import { bus } from "./modules/bus.js";
+
+ready.then((status) => console.log(status.modules)); // boot status
+await bus.once("theme:change", 2000); // wait for an event (rejects on timeout)
+await bus.emit("theme:change", { theme: "dark", previous: "light" });
+// settles after every handler
+scrollByCard(rail, 1).then(sync); // resolves when the scroll settles
 ```
 
 ## Getting started
 
 ```bash
-npm install        # dev tooling only (sharp for image optimization)
-npm start          # local static server → http://localhost:8080
+npm install        # dev tooling only (typescript + sharp)
+npm run build      # compile src/ → dist/
+npm start          # local static server → http://localhost:4173
 ```
 
-Node.js ≥ 18 is required. There is no build step: open the served page and it
-is the artifact.
+Node.js ≥ 18 is required. The deployable artifact is static: `index.html`,
+`css/`, compiled `dist/` and `assets/` — open the served page and it works.
+
+> Editing code? Change files under `src/`, then `npm run build`. The `dist/`
+> directory is generated output — never edit it by hand.
 
 ## Scripts
 
-| Command                 | What it does                                              |
-| ----------------------- | --------------------------------------------------------- |
-| `npm start`             | Serve the site locally (`scripts/serve.mjs`)              |
-| `npm test`              | Unit tests with the Node built-in runner (`node --test`)  |
-| `npm run audit`         | Static QA gate: links, `alt`/`width`, ARIA targets, no CDN |
-| `npm run verify`        | Tests **and** audit — what CI runs                         |
-| `npm run optimize:images` | Regenerate optimized WebP assets (`sharp`)              |
+| Command                    | What it does                                             |
+| -------------------------- | -------------------------------------------------------- |
+| `npm run build`            | Clean-compile `src/**/*.ts` → `dist/` (TypeScript)          |
+| `npm run typecheck`        | Strict type check without emitting (`tsc --noEmit`)       |
+| `npm start`                | Serve the site locally (`scripts/serve.mjs`)              |
+| `npm test`                 | Build, then unit tests (`node --test tests/`)             |
+| `npm run audit`            | Static QA gate: links, `alt`/`width`, ARIA targets, no CDN|
+| `npm run verify`           | Build + typecheck + tests + audit — what CI runs          |
+| `npm run optimize:images`  | Regenerate optimized WebP assets (`sharp`)                |
 
 ## Project structure
 
@@ -123,40 +149,47 @@ is the artifact.
 ├── css/
 │   ├── fonts.css         # @font-face declarations
 │   └── style.css         # tokens → BEM components → sections
-├── js/
-│   ├── main.js           # defensive boot + Promise-based readiness
+├── src/                  # TypeScript source (the only place to edit code)
+│   ├── main.ts           # defensive boot + Promise-based readiness
+│   ├── types.ts          # shared primitive types
 │   └── modules/
-│       ├── bus.js        # lexically scoped, Promise-based event bus
-│       ├── fare.js       # pure fare domain (shared browser/Node)
-│       ├── compare.js    # pure cross-service pricing domain
-│       ├── calculator.js # fare form UI + chart + trip persistence
-│       ├── accordion.js  # FAQ disclosure (arrow-key navigation)
-│       ├── tabs.js       # WAI-ARIA tabs, deep-linked via location.hash
-│       ├── carousel.js   # scroll-snap rail, Promise-based scrolling
-│       ├── form.js       # contact form validation
-│       ├── feedback.js   # accessible toast live region
-│       ├── nav.js        # mobile drawer + backdrop + scroll-spy
-│       ├── theme.js · reveal.js · progress.js
-├── scripts/              # serve · audit · optimize-images
-├── tests/                # fare, form and bus unit tests
+│       ├── bus.ts        # lexically scoped, Promise-based, typed event bus
+│       ├── fare.ts       # pure fare domain (shared browser/Node)
+│       ├── compare.ts    # pure cross-service pricing domain
+│       ├── share.ts      # pure shareable-trip-URL domain
+│       ├── calculator.ts # fare form UI + chart + persistence + URL sync
+│       ├── accordion.ts  # FAQ disclosure (animated, one-at-a-time, arrow keys)
+│       ├── tabs.ts       # WAI-ARIA tabs, deep-linked via location.hash
+│       ├── carousel.ts   # scroll-snap rail, Promise-based scrolling
+│       ├── form.ts       # contact form validation
+│       ├── feedback.ts   # accessible toast live region (bus-driven)
+│       ├── nav.ts        # mobile drawer + backdrop + scroll-spy
+│       └── theme.ts · reveal.ts · progress.ts
+├── dist/                  # GENERATED by `npm run build` (gitignored) — do not edit
+├── scripts/              # build · serve · audit · optimize-images
+├── tests/                # fare, compare, share, form, accordion, bus
 └── docs/ARCHITECTURE.md  # layering, event catalogue, contracts
 ```
 
 ## Testing & CI
 
 ```bash
-npm run verify     # unit tests + static audit (same as CI)
+npm run verify     # build + typecheck + unit tests + static audit
 ```
 
+- **Type checking** (`tsc --noEmit`) runs under `strict` mode with
+  `noUncheckedIndexedAccess` — the typed event bus means a mistyped topic or
+  payload is a build failure, not a runtime surprise.
 - **Unit tests** (`tests/*.test.js`) run with Node's built-in test runner —
-  no test framework dependency. Covered domains: fare estimation, service
-  comparison, form validation, accordion key map, event-bus
-  scoping/Promises.
+  no test framework dependency. They import the compiled ES modules, i.e.
+  the exact artifacts the browser loads. Covered domains: fare estimation,
+  service comparison, shareable trip links, form validation, accordion key
+  map, event-bus scoping/Promises.
 - **Static audit** (`scripts/audit.mjs`) fails the build on broken asset or
   fragment references, images without `alt`/`width`/`height`, dangling
   `aria-controls`, root-absolute CSS paths or any third-party request.
-- **CI** (`.github/workflows/ci.yml`) runs both on every push/PR, plus a check
-  that the optimized image assets exist.
+- **CI** (`.github/workflows/ci.yml`) runs everything on every push/PR, plus
+  a check that the optimized image assets exist.
 
 ## Accessibility
 
@@ -170,19 +203,23 @@ npm run verify     # unit tests + static audit (same as CI)
 
 ## Offline / PWA
 
-`sw.js` precaches the app shell (including every JS module), serves
+`sw.js` precaches the app shell (including every compiled JS module), serves
 navigations network-first with an offline fallback, and keeps code fresh with
 network-first + cache fallback. Bump `CACHE_VERSION` whenever a precached
-asset changes.
+asset changes — after `npm run build`, the file list under `dist/` must match
+the precache list.
 
 ## Coding guidelines
 
-- ES5-style IIFE modules with `"use strict"`, `var`, and a
-  `module.exports` guard so the same file runs in the browser and in Node.
-- JSDoc on every exported function; document *why*, not only *what*.
+- **Strict TypeScript ES modules** under `src/`; `tsc` emits to `dist/`.
+  `strict` + `noUncheckedIndexedAccess` are always on.
+- JSDoc on exported functions; document *why*, not only *what*.
+- Cross-domain communication goes through the typed bus (`EventMap` in
+  `bus.ts`) — never import another UI module directly. Adding a topic means
+  extending `EventMap`, which type-checks every publisher and subscriber.
+- Pure domains (`fare`, `compare`, `share`) stay DOM-free so Node can test
+  them directly.
 - CSS follows BEM; colours/spacing come from CSS variables only.
-- Cross-domain communication goes through `Tapsi.bus` — never import another
-  UI module directly.
 - Every non-trivial change ships with tests and passes `npm run verify`.
 
 ## License

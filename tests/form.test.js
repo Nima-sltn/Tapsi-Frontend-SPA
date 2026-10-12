@@ -2,10 +2,10 @@
  * Unit tests for the contact form validators.
  * Run with: npm test  (node --test tests/)
  */
-const test = require("node:test");
-const assert = require("node:assert/strict");
+import test from "node:test";
+import assert from "node:assert/strict";
 
-const form = require("../js/modules/form.js");
+import * as form from "../dist/modules/form.js";
 
 const VALID = {
   name: "نیما سلطان",
@@ -54,4 +54,10 @@ test("non-string input never throws", () => {
   assert.ok(form.validators.name(null));
   assert.ok(form.validators.email(undefined));
   assert.ok(form.validators.message(12345));
+});
+
+test("module exposes the expected public API", () => {
+  assert.equal(typeof form.init, "function");
+  assert.equal(typeof form.validate, "function");
+  assert.equal(typeof form.validators.name, "function");
 });

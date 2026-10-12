@@ -1648,6 +1648,20 @@ input[type="range"]::-moz-range-thumb {
   color: var(--color-muted);
 }
 
+/* shareable trip link */
+
+.calc-share {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-top: 1.2rem;
+}
+
+.calc-share .icon {
+  flex-shrink: 0;
+}
+
 .calc-result__range {
   margin-top: 0.8rem;
   font-size: 1.4rem;
@@ -1796,8 +1810,13 @@ input[type="range"]::-moz-range-thumb {
    ========================================================= */
 
 .faq__list {
-  max-width: 820px;
-  margin: 0 auto;
+  /* width: 100% is required: this list is a grid item of `.container`,
+     where `margin-inline: auto` disables stretch and would otherwise
+     shrink the list to fit its collapsed content (then jump to full
+     width as soon as an answer opens). */
+  width: 100%;
+  max-width: 960px;
+  margin-inline: auto;
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
@@ -1858,14 +1877,49 @@ input[type="range"]::-moz-range-thumb {
   transform: rotate(-90deg);
 }
 
+/* Animated disclosure panel.
+   `grid-template-rows: 0fr → 1fr` animates to the answer's real height
+   without measuring anything in JS. Collapsed panels stay `visibility:
+   hidden`, which removes them from the accessibility tree just like
+   `hidden`, while still letting an interrupted close animate cleanly.
+   The `hidden` attribute is only the no-JS fallback (see below) and is
+   removed by accordion.ts on init. */
 .faq__answer {
-  padding: 0 2rem 1.8rem;
-  font-size: 1.4rem;
-  color: var(--color-body);
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  /* NB: `--transition-base` is "0.3s ease", so it can only fill a
+     duration slot — using it as the visibility *delay* would produce
+     "0s linear 0.3s ease" (invalid) and silently drop this whole
+     declaration, making the close snap instead of animate. */
+  transition:
+    grid-template-rows var(--transition-base),
+    visibility 0s linear 0.3s;
+}
+
+.faq__answer.is-open {
+  grid-template-rows: 1fr;
+  visibility: visible;
+  transition:
+    grid-template-rows var(--transition-base),
+    visibility 0s linear 0s;
 }
 
 .faq__answer[hidden] {
   display: none;
+}
+
+.faq__answer-inner {
+  min-height: 0;
+  overflow: hidden;
+  padding: 0 2rem;
+  font-size: 1.4rem;
+  color: var(--color-body);
+}
+
+.faq__answer-inner > :last-child {
+  margin: 0;
+  padding-bottom: 1.8rem;
 }
 
 /* Without JS the buttons cannot expand anything — show every answer.
@@ -1984,7 +2038,9 @@ input[type="range"]::-moz-range-thumb {
 
 @media (prefers-reduced-motion: reduce) {
   .compare__bar,
-  .faq__chevron {
+  .faq__chevron,
+  .faq__answer,
+  .faq__answer.is-open {
     transition: none;
   }
 }

@@ -2,10 +2,10 @@
  * Unit tests for the fare estimation domain logic.
  * Run with: npm test  (node --test tests/)
  */
-const test = require("node:test");
-const assert = require("node:assert/strict");
+import test from "node:test";
+import assert from "node:assert/strict";
 
-const fare = require("../js/modules/fare.js");
+import * as fare from "../dist/modules/fare.js";
 
 test("estimates a fare with an itemised breakdown", () => {
   const result = fare.estimateFare({

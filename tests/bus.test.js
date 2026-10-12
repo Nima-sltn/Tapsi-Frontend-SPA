@@ -5,18 +5,19 @@
  *
  * Run with: npm test  (node --test tests/)
  */
-const test = require("node:test");
-const assert = require("node:assert/strict");
+import test from "node:test";
+import assert from "node:assert/strict";
 
-const bus = require("../js/modules/bus.js");
+import * as bus from "../dist/modules/bus.js";
 
 test("the subscriber registry is unreachable from outside (lexical scoping)", () => {
-  assert.equal(bus.topics, undefined, "registry must stay in the factory closure");
-  assert.equal(typeof bus.on, "function");
-  assert.equal(typeof bus.emit, "function");
-  assert.equal(typeof bus.once, "function");
+  assert.equal(bus.bus.topics, undefined, "registry must stay in the factory closure");
+  assert.equal(typeof bus.createBus, "function");
+  assert.equal(typeof bus.bus.on, "function");
+  assert.equal(typeof bus.bus.emit, "function");
+  assert.equal(typeof bus.bus.once, "function");
 
-  // Classic scripts must not leak a global in Node either.
+  // ES modules must not leak a global in Node either.
   assert.equal(globalThis.Tapsi, undefined);
 });
 
@@ -87,17 +88,23 @@ test("unsubscribe removes exactly one listener and is idempotent", async () => {
   const local = bus.createBus();
   const seen = [];
 
-  const off = local.on("t", () => seen.push("first"));
-  local.on("t", () => seen.push("second"));
+  const off = local.on("app:ready", () => seen.push("first"));
+  local.on("app:ready", () => seen.push("second"));
 
   off();
   off(); // second call must not remove anything else
 
-  await local.emit("t");
+  await local.emit("app:ready", { modules: [], failed: [], at: 0 });
   assert.deepEqual(seen, ["second"]);
-  assert.equal(local.has("t"), true);
+  assert.equal(local.has("app:ready"), true);
 });
 
 test("on() rejects non-function handlers", () => {
-  assert.throws(() => bus.on("bad", "not-a-function"), TypeError);
+  assert.throws(() => bus.bus.on("app:ready", "not-a-function"), TypeError);
+});
+
+test("the singleton bus is typed against the application event map", () => {
+  // Ad-hoc topics are rejected at the type level; at runtime the singleton
+  // only ever receives topics from the EventMap, so `has()` stays false.
+  assert.equal(bus.bus.has("nope:never"), false);
 });

@@ -1,27 +1,33 @@
 {
   "name": "tapsi-redesign",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "private": true,
-  "description": "Responsive, accessible and offline-capable redesign of the Tapsi marketing website (static HTML/CSS/JS).",
+  "type": "module",
+  "description": "Responsive, accessible and offline-capable redesign of the Tapsi marketing website (static HTML/CSS, TypeScript ES modules).",
   "keywords": [
     "tapsi",
     "landing-page",
     "static-site",
     "rtl",
     "accessibility",
-    "pwa"
+    "pwa",
+    "typescript"
   ],
   "license": "MIT",
   "author": "Nima Sltn",
   "scripts": {
     "start": "node scripts/serve.mjs",
+    "build": "node scripts/build.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "pretest": "npm run build",
     "test": "node --test",
     "audit": "node scripts/audit.mjs",
     "optimize:images": "node scripts/optimize-images.mjs",
-    "verify": "npm run test && npm run audit"
+    "verify": "npm run build && npm run typecheck && npm run test && npm run audit"
   },
   "devDependencies": {
-    "sharp": "^0.34.2"
+    "sharp": "^0.34.2",
+    "typescript": "^7.0.2"
   },
   "engines": {
     "node": ">=18"

@@ -2,11 +2,11 @@
  * Unit tests for the comparison domain (cross-service pricing).
  * Run with: npm test  (node --test tests/)
  */
-const test = require("node:test");
-const assert = require("node:assert/strict");
+import test from "node:test";
+import assert from "node:assert/strict";
 
-const compare = require("../js/modules/compare.js");
-const fare = require("../js/modules/fare.js");
+import * as compare from "../dist/modules/compare.js";
+import * as fare from "../dist/modules/fare.js";
 
 const TRIP = { distanceKm: 12, durationMin: 30, time: "day" };
 
@@ -43,7 +43,7 @@ test("each row matches the fare domain's own estimate", () => {
   const rows = compare.compareFare(TRIP);
 
   rows.forEach((row) => {
-    const estimate = fare.estimateFare(Object.assign({ service: row.key }, TRIP));
+    const estimate = fare.estimateFare({ ...TRIP, service: row.key });
     assert.equal(row.total, estimate.total);
     assert.equal(row.label, fare.SERVICES[row.key].label);
   });
@@ -51,7 +51,7 @@ test("each row matches the fare domain's own estimate", () => {
 
 test("a peak-time trip costs more than the same day-time trip", () => {
   const day = compare.compareFare(TRIP);
-  const peak = compare.compareFare(Object.assign({}, TRIP, { time: "peak" }));
+  const peak = compare.compareFare({ ...TRIP, time: "peak" });
 
   day.forEach((row, index) => {
     assert.ok(peak[index].total > row.total, `${row.key} should cost more at peak time`);
@@ -59,7 +59,7 @@ test("a peak-time trip costs more than the same day-time trip", () => {
 });
 
 test("an unknown time window propagates as a RangeError", () => {
-  assert.throws(() => compare.compareFare(Object.assign({}, TRIP, { time: "noon" })), RangeError);
+  assert.throws(() => compare.compareFare({ ...TRIP, time: "noon" }), RangeError);
 });
 
 test("the calculation is pure: repeated calls return equal (not shared) rows", () => {
