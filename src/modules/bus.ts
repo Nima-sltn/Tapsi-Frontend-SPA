@@ -32,7 +32,7 @@ export interface EventMap {
   "trip:share": { ok: boolean; via: "clipboard" | "fallback" };
 }
 
-export type Topic = keyof EventMap & string;
+export type Topic = keyof EventMap;
 
 /** Unsubscribe handle returned by `on()` — call it to remove one listener. */
 export type Unsubscribe = () => void;

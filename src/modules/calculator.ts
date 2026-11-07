@@ -103,8 +103,7 @@ function applyTrip(form: HTMLFormElement, trip: Partial<TripQuery>): boolean {
   if (service) {
     const options = (form.elements.namedItem("service") as HTMLSelectElement | null)?.options;
     if (options) {
-      for (let i = 0; i < options.length; i++) {
-        const option = options[i];
+      for (const option of options) {
         if (option && option.value === service) {
           (form.elements.namedItem("service") as HTMLSelectElement).value = service;
           applied = true;

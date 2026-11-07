@@ -151,12 +151,7 @@ export function init(): void {
   const onBreakpoint = (event: MediaQueryListEvent) => {
     if (event.matches) setExpanded(false);
   };
-  if (typeof media.addEventListener === "function") {
-    media.addEventListener("change", onBreakpoint);
-  } else if (typeof media.addListener === "function") {
-    // Safari ≤13
-    (media as unknown as { addListener(cb: typeof onBreakpoint): void }).addListener(onBreakpoint);
-  }
+  media.addEventListener("change", onBreakpoint);
 
   initScrollSpy();
 }

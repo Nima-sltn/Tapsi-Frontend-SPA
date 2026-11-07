@@ -59,11 +59,11 @@ export function roundTo(value: number, unit: number): number {
 }
 
 export function isServiceKey(value: string): value is ServiceKey {
-  return Object.prototype.hasOwnProperty.call(SERVICES, value);
+  return Object.hasOwn(SERVICES, value);
 }
 
 export function isTimeKey(value: string): value is TimeKey {
-  return Object.prototype.hasOwnProperty.call(TIME_MULTIPLIERS, value);
+  return Object.hasOwn(TIME_MULTIPLIERS, value);
 }
 
 /**

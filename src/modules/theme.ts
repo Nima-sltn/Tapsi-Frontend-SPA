@@ -62,10 +62,5 @@ export function init(): void {
       applyTheme(event.matches ? "dark" : "light");
     }
   };
-  if (typeof media.addEventListener === "function") {
-    media.addEventListener("change", onSystemChange);
-  } else if (typeof media.addListener === "function") {
-    // Safari ≤13
-    (media as unknown as { addListener(cb: typeof onSystemChange): void }).addListener(onSystemChange);
-  }
+  media.addEventListener("change", onSystemChange);
 }
