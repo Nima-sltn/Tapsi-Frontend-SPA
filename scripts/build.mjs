@@ -10,21 +10,46 @@
  * stale module from a renamed/deleted source file (the service worker
  * precaches every path in there, so a leftover would ship forever).
  */
-import { rmSync } from "node:fs";
+import { rmSync, existsSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const TSC = path.join(ROOT, "node_modules", "typescript", "bin", "tsc");
+
+// Locate tsc entry point (pure JS CLI entry in typescript package)
+let tscPath = path.join(ROOT, "node_modules", "typescript", "bin", "tsc");
+if (!existsSync(tscPath)) {
+  const binTsc = path.join(ROOT, "node_modules", ".bin", process.platform === "win32" ? "tsc.cmd" : "tsc");
+  if (existsSync(binTsc)) {
+    tscPath = binTsc;
+  }
+}
 
 rmSync(path.join(ROOT, "dist"), { recursive: true, force: true });
-// Remove the pre-3.x output directory if an older checkout still has it.
 rmSync(path.join(ROOT, "js"), { recursive: true, force: true });
 
-const result = spawnSync(process.execPath, [TSC, "-p", path.join(ROOT, "tsconfig.json")], {
-  stdio: "inherit",
-  cwd: ROOT
-});
+console.log("[build] Compiling TypeScript modules to dist/...");
 
-process.exit(result.status === null ? 1 : result.status);
+const isDirectJs = tscPath.endsWith("tsc") || tscPath.endsWith("tsc.js");
+const result = isDirectJs
+  ? spawnSync(process.execPath, [tscPath, "-p", path.join(ROOT, "tsconfig.json")], {
+      stdio: "inherit",
+      cwd: ROOT
+    })
+  : spawnSync(tscPath, ["-p", path.join(ROOT, "tsconfig.json")], {
+      stdio: "inherit",
+      cwd: ROOT
+    });
+
+if (result.error) {
+  console.error("[build] Failed to launch TypeScript compiler:", result.error);
+  process.exit(1);
+}
+
+if (result.status !== 0) {
+  console.error(`[build] Compilation failed with exit code ${result.status}`);
+  process.exit(result.status ?? 1);
+}
+
+console.log("[build] Build complete: dist/ generated successfully.");

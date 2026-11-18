@@ -27,10 +27,12 @@
     "verify": "npm run build && npm run typecheck && npm run test && npm run audit"
   },
   "devDependencies": {
-    "sharp": "^0.34.2",
-    "typescript": "^7.0.2"
+    "sharp": "^0.35.5"
   },
   "engines": {
     "node": ">=18"
+  },
+  "dependencies": {
+    "typescript": "^5.8.2"
   }
 }
