@@ -12,9 +12,6 @@
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#ff5722" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#161927" media="(prefers-color-scheme: dark)" />
-    <meta
-      http-equiv="Content-Security-Policy"
-      content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'self';" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
 
     <link rel="canonical" href="https://tapsi-redesign.netlify.app/" />
@@ -124,12 +121,13 @@
     <header class="main-header">
       <nav class="nav" aria-label="ناوبری اصلی">
         <a class="nav__brand" href="#home" aria-label="تپسی — بازگشت به ابتدای صفحه">
-          <img src="assets/images/logo.svg" alt="لوگوی تپسی" width="102" height="22" />
+          <img src="assets/images/logo.svg" alt="لوگوی تپسی" class="nav__logo nav__logo--light" width="102" height="22" />
+          <img src="assets/images/tapsi-logo-white.svg" alt="لوگوی تپسی" class="nav__logo nav__logo--dark" width="102" height="22" />
         </a>
 
         <div class="nav__actions">
           <button
-            class="theme-toggle audio-toggle"
+            class="audio-toggle"
             id="audio-toggle"
             type="button"
             aria-pressed="false"
