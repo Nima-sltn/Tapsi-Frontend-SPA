@@ -16,6 +16,7 @@
  * - Every toggle publishes `accordion:change` on the event bus.
  */
 import { bus } from "./bus.js";
+import { haptics } from "../services/haptics.js";
 
 /**
  * Maps a navigation key to a question index.
@@ -50,6 +51,9 @@ export function setOpen(button: HTMLButtonElement, expanded: boolean): void {
     panel.classList.toggle("is-open", expanded);
   }
 
+  if (expanded) {
+    haptics.play("tap");
+  }
   void bus.emit("accordion:change", { id: button.id, expanded: Boolean(expanded) });
 }
 

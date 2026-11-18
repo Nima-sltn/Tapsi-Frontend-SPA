@@ -28,6 +28,9 @@ export interface EventMap {
   "carousel:change": { atStart: boolean; atEnd: boolean };
   "calculator:restore": unknown;
   "calculator:change": { service: string; total: number };
+  "eco:calculate": { service: string; carbonGrams: number; savedCarbonGrams: number };
+  "audio:toggle": { enabled: boolean };
+  "trip:state": { from: string; to: string };
   "form:submit": { outcome: "valid" | "invalid" | "ignored"; errors?: Record<string, string> };
   "trip:share": { ok: boolean; via: "clipboard" | "fallback" };
 }

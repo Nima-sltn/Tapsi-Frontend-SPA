@@ -10,6 +10,7 @@
  * on `hashchange` (back/forward between anchors keeps working).
  */
 import { bus } from "./bus.js";
+import { haptics } from "../services/haptics.js";
 
 let tabs: HTMLButtonElement[] = [];
 
@@ -50,6 +51,7 @@ export function activate(tab: HTMLButtonElement | undefined, focus?: boolean, up
   if (updateUrl) syncHash(tab);
 
   if (previous !== tab) {
+    haptics.play("tap");
     void bus.emit("tabs:change", {
       id: tab.id,
       panel: tab.getAttribute("aria-controls")

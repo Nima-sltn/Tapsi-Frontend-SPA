@@ -24,6 +24,7 @@ import * as carousel from "./modules/carousel.js";
 import * as form from "./modules/form.js";
 import * as calculator from "./modules/calculator.js";
 import * as progress from "./modules/progress.js";
+import * as audio from "./modules/audio.js";
 import type { BootStatus } from "./types.js";
 
 interface FeatureModule {
@@ -36,6 +37,7 @@ const MODULES: Array<[string, FeatureModule]> = [
   ["accordion", accordion],
   ["tabs", tabs],
   ["theme", theme],
+  ["audio", audio],
   ["reveal", reveal],
   ["carousel", carousel],
   ["form", form],

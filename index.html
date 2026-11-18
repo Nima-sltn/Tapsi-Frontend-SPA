@@ -12,6 +12,10 @@
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#ff5722" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#161927" media="(prefers-color-scheme: dark)" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'self';" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
 
     <link rel="canonical" href="https://tapsi-redesign.netlify.app/" />
     <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg" />
@@ -125,6 +129,20 @@
 
         <div class="nav__actions">
           <button
+            class="theme-toggle audio-toggle"
+            id="audio-toggle"
+            type="button"
+            aria-pressed="false"
+            aria-label="فعال کردن بازخورد صوتی">
+            <svg class="icon audio-toggle__icon audio-toggle__icon--mute" aria-hidden="true">
+              <use href="assets/images/svg-sprite.svg#volume-x"></use>
+            </svg>
+            <svg class="icon audio-toggle__icon audio-toggle__icon--sound" aria-hidden="true">
+              <use href="assets/images/svg-sprite.svg#volume-high"></use>
+            </svg>
+          </button>
+
+          <button
             class="theme-toggle"
             id="theme-toggle"
             type="button"
@@ -152,13 +170,14 @@
         </div>
 
         <ul class="list nav__list" id="nav-menu">
-          <li class="nav__item"><a href="#contact">پشتیبانی</a></li>
+          <li class="nav__item"><a href="#services">سرویس‌ها</a></li>
+          <li class="nav__item"><a href="#calculator">محاسبه کرایه</a></li>
+          <li class="nav__item"><a href="#plans">تعرفه‌ها و اشتراک</a></li>
+          <li class="nav__item"><a href="#business">خدمات سازمانی</a></li>
           <li class="nav__item"><a href="#faq">پرسش‌های متداول</a></li>
-          <li class="nav__item"><a href="#business">خدمات کسب و کارها</a></li>
-          <li class="nav__item"><a href="#footer">فرصت های شغلی</a></li>
-          <li class="nav__item"><a href="#offers">وبلاگ</a></li>
+          <li class="nav__item"><a href="#contact">پشتیبانی</a></li>
           <li class="nav__item cta">
-            <a href="#home" class="btn btn--primary btn--block">دانلود تپسی</a>
+            <a href="#calculator" class="btn btn--primary btn--block">شروع سفر</a>
           </li>
         </ul>
       </nav>
@@ -201,26 +220,26 @@
         </picture>
 
         <div class="hero-wrapper container">
-          <div class="intro-btn">
-            <h1 id="hero-title">تپسی</h1>
-            <h2>اپلیکیشن درخواست خودرو</h2>
-            <div class="intro-wrapper">
-              <button type="button" class="intro-btn__passenger" data-toast="لینک دانلود اپلیکیشن مسافران به‌زودی فعال می‌شود.">
-                <svg class="icon" aria-hidden="true"><use href="assets/images/svg-sprite.svg#download"></use></svg>
-                <span class="intro-btn__label">دانلود اپلیکیشن مسافران</span>
-              </button>
-              <button type="button" class="intro-btn__passenger" data-toast="نسخه وب اپلیکیشن مسافران به‌زودی فعال می‌شود.">
-                <svg class="icon" aria-hidden="true"><use href="assets/images/svg-sprite.svg#download"></use></svg>
-                <span class="intro-btn__label">وب اپلیکیشن مسافران</span>
-              </button>
-              <button type="button" class="intro-btn__passenger driver-intro" data-toast="لینک دانلود اپلیکیشن رانندگان به‌زودی فعال می‌شود.">
-                <svg class="icon" aria-hidden="true"><use href="assets/images/svg-sprite.svg#download"></use></svg>
-                <span class="intro-btn__label">دانلود اپلیکیشن رانندگان</span>
-              </button>
-              <button type="button" class="intro-btn__passenger driver-intro" data-toast="فرم ثبت‌نام راننده به‌زودی فعال می‌شود.">
-                <svg class="icon" aria-hidden="true"><use href="assets/images/svg-sprite.svg#car"></use></svg>
-                <span class="intro-btn__label">ثبت نام راننده</span>
-              </button>
+          <div class="hero-card">
+            <span class="hero-card__badge">سامانه هوشمند حمل‌ونقل شهری</span>
+            <h1 id="hero-title">تپسی؛ سفری سریع، امن و آسوده در سراسر شهر</h1>
+            <p class="hero-card__desc">
+              در هر ساعت از شبانه‌روز، نزدیک‌ترین خودرو یا پیک را در چند ثانیه فراخوانی کنید یا با پنل سازمانی، ناوگان سفرهای تجاری و مأموریت‌های پرسنل خود را مدیریت نمایید.
+            </p>
+            <div class="hero-card__actions">
+              <a href="#calculator" class="btn btn--primary hero-btn">
+                برآورد کرایه سفر
+              </a>
+              <a href="#services" class="btn btn--secondary hero-btn">
+                شناخت سرویس‌ها
+              </a>
+            </div>
+            <div class="hero-card__meta" aria-label="پلتفرم‌های در دسترس تپسی">
+              <span class="meta-item">وب‌اپلیکیشن مسافر (PWA)</span>
+              <span class="meta-sep" aria-hidden="true">&bull;</span>
+              <span class="meta-item">اندروید و iOS</span>
+              <span class="meta-sep" aria-hidden="true">&bull;</span>
+              <span class="meta-item">سرویس تلفنی ۱۶۳۰</span>
             </div>
           </div>
         </div>
@@ -612,9 +631,24 @@
             <p class="calc-result__range">
               بازه تخمینی: <span id="fare-range">—</span> تومان
             </p>
+
+            <div class="calc-eco" id="fare-eco" aria-label="تحلیل اثر زیست‌محیطی سفر">
+              <div class="calc-eco__item">
+                <svg class="icon calc-eco__icon" aria-hidden="true"><use href="assets/images/svg-sprite.svg#leaf"></use></svg>
+                <div>
+                  <span class="calc-eco__label">صرفه‌جویی کربن:</span>
+                  <strong id="fare-carbon-saved" class="calc-eco__value">—</strong>
+                </div>
+              </div>
+              <div class="calc-eco__item">
+                <span class="calc-eco__label">وضعیت ترافیک مسیر:</span>
+                <span id="fare-traffic-status" class="calc-eco__badge" data-level="moderate">—</span>
+              </div>
+            </div>
+
             <button class="btn btn--secondary btn--block calc-share" id="fare-share" type="button">
-              <svg class="icon" aria-hidden="true"><use href="assets/images/svg-sprite.svg#edit"></use></svg>
-              کپی لینک این سفر
+              <svg class="icon" aria-hidden="true"><use href="assets/images/svg-sprite.svg#share"></use></svg>
+              اشتراک‌گذاری یا کپی لینک سفر
             </button>
             <p class="calc-note">
               * این مبلغ تقریبی است و عواملی مانند ترافیک، شرایط جوی و میزان
@@ -639,31 +673,30 @@
 
       <!-- Plans -->
       <section class="container block" id="plans" aria-labelledby="plans-title">
-        <h2 class="block__heading" id="plans-title">تعرفه های ویژه مشتریان</h2>
+        <h2 class="block__heading" id="plans-title">بسته‌ها و راهکارهای رفت‌وآمد تپسی</h2>
+        <p class="section-lead">
+          راهکارهای متناسب با نیاز مسافران روزمره، کاربران حرفه‌ای و مأموریت‌های سازمانی
+        </p>
+
         <div class="block-plan">
           <div class="plan">
             <article class="card card--secondary">
               <header class="card__header">
                 <span class="plan__introduction">
-                  <h3 class="plan__title">اقتصادی</h3>
-                  <span class="badge badge--secondary">15% OFF</span>
+                  <h3 class="plan__title">مسافران روزمره</h3>
                 </span>
-
-                <span class="plan__price">390,000</span>
-                <span class="plan__billing-cycle"> ماهانه/تومان </span>
-
-                <span class="plan__description">سرویس ماشین های کلاسیک</span>
+                <span class="plan__price">بدون اشتراک</span>
+                <span class="plan__billing-cycle">پرداخت به ازای هر سفر</span>
+                <span class="plan__description">درخواست فوری خودرو و پیک با نازل‌ترین تعرفه شهری</span>
               </header>
               <div class="card__body">
                 <ul class="list list--tick">
-                  <li class="list__item">کیفیت عالی</li>
-                  <li class="list__item">کم سر و صدا</li>
-                  <li class="list__item">زمان محدود</li>
-                  <li class="list__item">سرویس روزانه</li>
+                  <li class="list__item">دسترسی سریع به کلاسیک، لاین و تلفنی ۱۶۳۰</li>
+                  <li class="list__item">تعیین چند مقصد و توقف‌های بین‌راهی</li>
+                  <li class="list__item">پرداخت اعتباری، نقدی یا آنلاین</li>
+                  <li class="list__item">پشتیبانی شبانه‌روزی و نظارت لحظه‌ای بر امنیت</li>
                 </ul>
-                <button class="btn btn--block btn--primary" type="button" data-toast="ثبت سفارش در نسخه دمو غیرفعال است.">
-                  ثبت سفارش
-                </button>
+                <a href="#calculator" class="btn btn--block btn--secondary">محاسبه کرایه مسیر</a>
               </div>
             </article>
           </div>
@@ -671,25 +704,24 @@
           <div class="plan plan--popular">
             <article class="card card--primary">
               <header class="card__header">
+                <div class="plan__badge">پیشنهاد برگزیده مسافران</div>
                 <span class="plan__introduction">
-                  <h3 class="plan__title">اقتصادی</h3>
-                  <span class="badge badge--primary">15% OFF</span>
+                  <h3 class="plan__title">اشتراک طلایی تپسی پلاس</h3>
                 </span>
-
-                <span class="plan__price"> 390,000 </span>
-                <span class="plan__billing-cycle"> ماهانه/تومان </span>
-
-                <span class="plan__description">سرویس ماشین های کلاسیک</span>
+                <span class="plan__price">۱۰٪ بازگشت وجه</span>
+                <span class="plan__billing-cycle">کیف پول نقدی (Cashback)</span>
+                <span class="plan__description">انتخاب اول مسافران منظم کاری و سرنشینان حساس به کیفیت</span>
               </header>
               <div class="card__body">
                 <ul class="list list--tick">
-                  <li class="list__item">کیفیت عالی</li>
-                  <li class="list__item">کم سروصدا</li>
-                  <li class="list__item">زمان محدود</li>
-                  <li class="list__item">سرویس روزانه</li>
+                  <li class="list__item">اعزام خودروهای منتخب و رانندگان بالاترین امتیاز</li>
+                  <li class="list__item">اولویت در فراخوانی در ساعات بارندگی و اوج ترافیک</li>
+                  <li class="list__item">۱۰٪ بازگشت نقدی هر سفر به حساب تپسی</li>
+                  <li class="list__item">خط تلفنی اختصاصی پشتیبانی VIP بدون صف</li>
+                  <li class="list__item">تخفیف همیشگی بر خدمات موتوپیک و اتوپیک</li>
                 </ul>
-                <button class="btn btn--block btn--primary" type="button" data-toast="ثبت سفارش در نسخه دمو غیرفعال است.">
-                  ثبت سفارش
+                <button class="btn btn--block btn--primary" type="button" data-toast="درخواست اشتراک طلایی مسافران با موفقیت ثبت شد؛ همکاران ما با شما تماس خواهند گرفت.">
+                  فعال‌سازی اشتراک طلایی
                 </button>
               </div>
             </article>
@@ -699,24 +731,21 @@
             <article class="card card--secondary">
               <header class="card__header">
                 <span class="plan__introduction">
-                  <h3 class="plan__title">اقتصادی</h3>
-                  <span class="badge badge--secondary">15% OFF</span>
+                  <h3 class="plan__title">خدمات شرکتی و سازمانی</h3>
                 </span>
-
-                <span class="plan__price">390,000</span>
-                <span class="plan__billing-cycle"> ماهانه/تومان </span>
-
-                <span class="plan__description">سرویس ماشین های کلاسیک</span>
+                <span class="plan__price">فاکتور رسمی</span>
+                <span class="plan__billing-cycle">کسر قانونی مالیات ارزش افزوده</span>
+                <span class="plan__description">مدیریت متمرکز سفرهای اداری، مأموریت‌ها و پیک اسناد</span>
               </header>
               <div class="card__body">
                 <ul class="list list--tick">
-                  <li class="list__item">کیفیت عالی</li>
-                  <li class="list__item">کم سر و صدا</li>
-                  <li class="list__item">زمان محدود</li>
-                  <li class="list__item">سرویس روزانه</li>
+                  <li class="list__item">پنل وب پیشرفته برای تعریف نامحدود پرسنل</li>
+                  <li class="list__item">صدور فاکتور معتبر شرکتی با شناسه ملی</li>
+                  <li class="list__item">شارژ اعتباری سهمیه تردد بدون تسویه نقدی</li>
+                  <li class="list__item">دانلود گزارش‌های لحظه‌ای اکسل برای حسابداری</li>
                 </ul>
-                <button class="btn btn--block btn--primary" type="button" data-toast="ثبت سفارش در نسخه دمو غیرفعال است.">
-                  ثبت سفارش
+                <button class="btn btn--block btn--secondary" type="button" data-toast="درخواست مشاوره پنل سازمانی دریافت شد؛ کارشناس فروش با شما تماس می‌گیرد.">
+                  درخواست مشاوره سازمانی
                 </button>
               </div>
             </article>
@@ -1001,7 +1030,10 @@
       <!-- Offers carousel -->
       <section class="container block travel" id="offers" aria-labelledby="offers-title">
         <div class="section-head">
-          <h2 class="block__heading" id="offers-title">جوایز ویژه</h2>
+          <div>
+            <h2 class="block__heading" id="offers-title">باشگاه مشتریان و امتیازات تپسی</h2>
+            <p class="section-lead">از جوایز فصلی، تخفیف‌های دانشگاهی و خدمات ویژه همراهان تپسی بهره‌مند شوید</p>
+          </div>
           <div class="carousel-controls">
             <button type="button" class="carousel-btn" data-carousel-prev aria-label="نمایش کارت قبلی">
               <svg class="icon" aria-hidden="true"><use href="assets/images/svg-sprite.svg#chevron-right"></use></svg>
@@ -1016,14 +1048,14 @@
           class="travel__slides"
           data-carousel
           aria-roledescription="carousel"
-          aria-label="کارت‌های جوایز ویژه">
+          aria-label="کارت‌های مزایا و باشگاه مشتریان">
           <article class="travel__slide">
             <div class="slide__img">
               <picture>
                 <source srcset="assets/images/travel-1.webp" type="image/webp" />
                 <img
                   src="assets/images/travel-1.jpg"
-                  alt="اقامتگاه کویری برای جایزه سفر به قلب کویر"
+                  alt="باشگاه مشتریان و کدهای تخفیف تپسی"
                   width="640"
                   height="451"
                   loading="lazy"
@@ -1032,18 +1064,12 @@
             </div>
             <div class="slide__detail">
               <div class="slide__header">
-                <span class="badge badge--primary">ویژه</span>
-                <p>اقامت رایگان &bull; سفر سه روزه</p>
+                <span class="slide__tag">باشگاه مشتریان</span>
               </div>
-              <p class="slide__title">سفر به قلب کویر</p>
-              <div class="slide__icons">
-                <div>
-                  <svg class="icon" aria-hidden="true"><use href="assets/images/svg-sprite.svg#heart"></use></svg>
-                  <span>12</span>
-                  <svg class="icon" aria-hidden="true"><use href="assets/images/svg-sprite.svg#eye"></use></svg>
-                  <span>14</span>
-                </div>
-              </div>
+              <h3 class="slide__title">تبدیل امتیاز سفرهای روزانه به تخفیف خرید</h3>
+              <p class="slide__desc">
+                با هر سفر ستاره بگیرید و آن‌ها را برای خرید آنلاین از دیجی‌کالا، فیلم‌نت و خدمات رفاهی خرج کنید.
+              </p>
             </div>
           </article>
 
@@ -1053,7 +1079,7 @@
                 <source srcset="assets/images/travel-2.webp" type="image/webp" />
                 <img
                   src="assets/images/travel-2.jpg"
-                  alt="چشم‌انداز طبیعی برای جایزه سفر کویری"
+                  alt="تخفیف ویژه مسیرهای دانشجویی"
                   width="640"
                   height="427"
                   loading="lazy"
@@ -1062,18 +1088,12 @@
             </div>
             <div class="slide__detail">
               <div class="slide__header">
-                <span class="badge badge--primary">ویژه</span>
-                <p>اقامت رایگان &bull; سفر سه روزه</p>
+                <span class="slide__tag">تخفیف دانشگاهی</span>
               </div>
-              <p class="slide__title">سفر به قلب کویر</p>
-              <div class="slide__icons">
-                <div>
-                  <svg class="icon" aria-hidden="true"><use href="assets/images/svg-sprite.svg#heart"></use></svg>
-                  <span>12</span>
-                  <svg class="icon" aria-hidden="true"><use href="assets/images/svg-sprite.svg#eye"></use></svg>
-                  <span>14</span>
-                </div>
-              </div>
+              <h3 class="slide__title">سفرهای به‌صرفه و اقتصادی در مسیر دانشگاه</h3>
+              <p class="slide__desc">
+                رفت‌وآمد آسان و سریع میان دانشگاه و خوابگاه در سراسر شهرهای فعال با ۳۰٪ تخفیف ثابت هفتگی.
+              </p>
             </div>
           </article>
 
@@ -1083,7 +1103,7 @@
                 <source srcset="assets/images/travel-3.webp" type="image/webp" />
                 <img
                   src="assets/images/travel-3.jpg"
-                  alt="تپه‌های شنی غروب برای جایزه سفر کویری"
+                  alt="پوشش بیمه تمام سرنشینان تپسی"
                   width="640"
                   height="907"
                   loading="lazy"
@@ -1092,18 +1112,12 @@
             </div>
             <div class="slide__detail">
               <div class="slide__header">
-                <span class="badge badge--primary">ویژه</span>
-                <p>اقامت رایگان &bull; سفر سه روزه</p>
+                <span class="slide__tag">امنیت و بیمه</span>
               </div>
-              <p class="slide__title">سفر به قلب کویر</p>
-              <div class="slide__icons">
-                <div>
-                  <svg class="icon" aria-hidden="true"><use href="assets/images/svg-sprite.svg#heart"></use></svg>
-                  <span>12</span>
-                  <svg class="icon" aria-hidden="true"><use href="assets/images/svg-sprite.svg#eye"></use></svg>
-                  <span>14</span>
-                </div>
-              </div>
+              <h3 class="slide__title">پوشش کامل بیمه حوادث سرنشینان و مرسولات</h3>
+              <p class="slide__desc">
+                تمامی سفرهای خودرویی و بسته‌های پیکی از زمان مبدا تا مقصد تحت پوشش کامل بیمه حوادث قرار دارند.
+              </p>
             </div>
           </article>
 
@@ -1113,7 +1127,7 @@
                 <source srcset="assets/images/travel-4.webp" type="image/webp" />
                 <img
                   src="assets/images/travel-4.jpg"
-                  alt="کویر در شب برای جایزه سفر کویری"
+                  alt="خدمات رفاهی و تسهیلات سفیران تپسی"
                   width="640"
                   height="960"
                   loading="lazy"
@@ -1122,18 +1136,12 @@
             </div>
             <div class="slide__detail">
               <div class="slide__header">
-                <span class="badge badge--primary">ویژه</span>
-                <p>اقامت رایگان &bull; سفر سه روزه</p>
+                <span class="slide__tag">باشگاه سفیران</span>
               </div>
-              <p class="slide__title">سفر به قلب کویر</p>
-              <div class="slide__icons">
-                <div>
-                  <svg class="icon" aria-hidden="true"><use href="assets/images/svg-sprite.svg#heart"></use></svg>
-                  <span>12</span>
-                  <svg class="icon" aria-hidden="true"><use href="assets/images/svg-sprite.svg#eye"></use></svg>
-                  <span>14</span>
-                </div>
-              </div>
+              <h3 class="slide__title">تسهیلات خرید قطعات خودرو و وام رانندگان</h3>
+              <p class="slide__desc">
+                تخفیف دولتی لاستیک، روغن موتور و قطعات مصرفی به همراه پاداش‌های فصلی برای سفیران کوشای تپسی.
+              </p>
             </div>
           </article>
         </section>

@@ -1,36 +1,41 @@
 /**
- * Fare calculator UI.
+ * Fare calculator UI and reactive presentation layer.
  *
- * Binds the `#fare-form` controls to the pure {@link fare} domain module
- * and renders the breakdown reactively on every input change.
+ * Binds the `#fare-form` controls to the pure {@link fare} and {@link calculateEcoImpact}
+ * domain modules and renders the breakdown, comparison bars, and environmental impact
+ * reactively on every input change.
  *
- * Extras
- *  - draws the cross-service comparison chart from {@link compare}
- *  - persists the last trip in `localStorage` and restores it on load
- *    (every stored value is validated against the markup first)
- *  - mirrors the trip into the URL (`?service=…&km=…`) so any calculator
- *    state is shareable, and restores from the URL on load (a shared link
- *    wins over local storage — see {@link restore})
- *  - publishes `calculator:restore`, `calculator:change` and `trip:share`
- *    on the event bus
+ * Architecture enhancements:
+ *  - Trip state machine driving deterministic UI lifecycle states
+ *  - Multi-tab synchronization via BroadcastChannel (crossTabSync)
+ *  - Micro-haptic audio cues via Web Audio API (haptics)
+ *  - Modern Web Share API with graceful clipboard fallback
+ *  - Real-time environmental CO2 savings analysis
  */
+
 import { bus } from "./bus.js";
 import { estimateFare, formatToman } from "./fare.js";
 import { compareFare } from "./compare.js";
 import { parseTripSearch, tripToSearch, type TripQuery } from "./share.js";
+import { calculateEcoImpact } from "../domain/eco/carbon.js";
+import { TripStateMachine } from "../domain/trip/state-machine.js";
+import { defaultStorage } from "../infrastructure/storage.js";
+import { crossTabSync } from "../services/cross-tab.js";
+import { haptics } from "../services/haptics.js";
 import type { Trip } from "../types.js";
 
 const DISTANCE_LABELS = { min: 1, max: 50 };
 const DURATION_LABELS = { min: 5, max: 120 };
-const STORAGE_KEY = "tapsi-fare";
+const STORAGE_KEY = "fare_trip";
+
+const stateMachine = new TripStateMachine();
 
 function byId(id: string): HTMLElement | null {
   return document.getElementById(id);
 }
 
 /**
- * Draws the "what does every service cost?" bar chart.
- * Pure rendering: all maths happens in the compare domain.
+ * Draws the cross-service comparative pricing chart.
  */
 function renderCompare(input: Trip): void {
   const list = byId("fare-compare-list");
@@ -58,7 +63,7 @@ function renderCompare(input: Trip): void {
     const bar = document.createElement("span");
     bar.className = "compare__bar";
     bar.style.width = `${Math.round(row.ratio * 100)}%`;
-    bar.title = `${row.label}: ${formatToman(row.total)}`;
+    bar.title = `${row.label}: ${formatToman(row.total)} تومان`;
     track.appendChild(bar);
 
     const value = document.createElement("span");
@@ -72,7 +77,7 @@ function renderCompare(input: Trip): void {
   });
 }
 
-/** Reads the live form state. */
+/** Reads the current form values into a typed Trip model. */
 export function readForm(form: HTMLFormElement): Trip {
   const named = (name: string): HTMLInputElement | null =>
     form.elements.namedItem(name) as HTMLInputElement | null;
@@ -86,16 +91,12 @@ export function readForm(form: HTMLFormElement): Trip {
   };
 }
 
-/** Persists the current trip (fire-and-forget; storage may be unavailable). */
+/** Persists the trip state using the resilient storage repository. */
 export function save(form: HTMLFormElement): void {
-  try {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(readForm(form)));
-  } catch {
-    /* storage disabled — the calculator still works for this visit */
-  }
+  defaultStorage.set(STORAGE_KEY, readForm(form));
 }
 
-/** Applies a trip to the form, validating every value against the markup. */
+/** Applies a trip object to the form controls with boundary clamping. */
 function applyTrip(form: HTMLFormElement, trip: Partial<TripQuery>): boolean {
   let applied = false;
 
@@ -120,8 +121,6 @@ function applyTrip(form: HTMLFormElement, trip: Partial<TripQuery>): boolean {
     const value = trip[key];
     if (!input || typeof value !== "number" || !Number.isFinite(value)) return;
 
-    // Clamp to the bounds declared in the markup — stale storage or a
-    // hand-edited URL can never produce an invalid form.
     const min = Number(input.min);
     const max = Number(input.max);
     input.value = String(Math.min(Math.max(value, min), max));
@@ -139,53 +138,40 @@ function applyTrip(form: HTMLFormElement, trip: Partial<TripQuery>): boolean {
   return applied;
 }
 
-/**
- * Applies a previously stored trip to the form.
- * Every value is validated against the actual markup first, so stale or
- * hand-edited storage can never put the form in an invalid state.
- * @returns Whether anything was restored.
- */
+/** Restores saved trip configuration from persistent repository. */
 export function restore(form: HTMLFormElement): boolean {
-  let raw: string | null = null;
-  try {
-    raw = window.localStorage.getItem(STORAGE_KEY);
-  } catch {
-    return false;
-  }
-  if (!raw) return false;
-
-  let saved: Partial<Trip> | null = null;
-  try {
-    saved = JSON.parse(raw) as Partial<Trip> | null;
-  } catch {
-    return false;
-  }
+  const saved = defaultStorage.get<Partial<Trip>>(STORAGE_KEY);
   if (!saved || typeof saved !== "object") return false;
-
   return applyTrip(form, saved);
 }
 
-/** Mirrors the trip into the address bar so the state is shareable. */
+/** Mirrors the trip into the URL query parameters without creating history pollution. */
 function syncUrl(trip: Trip): void {
   try {
     const query = tripToSearch(trip);
     window.history.replaceState(null, "", `${window.location.pathname}${query}${window.location.hash}`);
   } catch {
-    /* sandboxed/`file://` context: sharing degrades to the copy button only */
+    // Degrades gracefully on sandbox environments
   }
 }
 
-/** Writes a Toman amount into an element. */
+/** Writes a formatted Toman value into a designated DOM element. */
 function writeAmount(id: string, value: number): void {
   const element = byId(id);
   if (element) element.textContent = formatToman(value);
 }
 
+/**
+ * Main reactive render cycle.
+ */
 function render(form: HTMLFormElement): void {
   const input = readForm(form);
-  const estimate = estimateFare(input);
+  stateMachine.send({ type: "BEGIN_CALCULATION" });
 
-  // Slider read-outs (Persian numerals).
+  const estimate = estimateFare(input);
+  const eco = calculateEcoImpact(input.service, input.distanceKm, input.time);
+
+  // Slider read-outs with localized Persian numbers
   const distanceOut = byId("fare-distance-out");
   if (distanceOut) {
     distanceOut.textContent =
@@ -197,7 +183,7 @@ function render(form: HTMLFormElement): void {
       formatToman(input.durationMin) + " دقیقه" + (input.durationMin === DURATION_LABELS.max ? " یا بیشتر" : "");
   }
 
-  // Breakdown.
+  // Cost breakdown
   writeAmount("fare-base", estimate.breakdown.base);
   writeAmount("fare-distance-cost", estimate.breakdown.distance);
   writeAmount("fare-time-cost", estimate.breakdown.time);
@@ -217,27 +203,68 @@ function render(form: HTMLFormElement): void {
     range.textContent = `${formatToman(estimate.range.min)} تا ${formatToman(estimate.range.max)}`;
   }
 
+  // Eco impact indicators
+  const carbonSaved = byId("fare-carbon-saved");
+  if (carbonSaved) {
+    carbonSaved.textContent = `${formatToman(eco.savedCarbonGrams)} گرم CO₂ (${eco.treeDaysEquivalent} روز جذب درخت)`;
+  }
+  const trafficStatus = byId("fare-traffic-status");
+  if (trafficStatus) {
+    trafficStatus.textContent = eco.trafficLabel;
+    trafficStatus.setAttribute("data-level", eco.trafficLevel);
+  }
+
   renderCompare(input);
   save(form);
   syncUrl(input);
 
+  // Sync to other open tabs
+  crossTabSync.publish("calculator:sync", input);
+
+  stateMachine.send({ type: "CALCULATION_SUCCESS", trip: input });
+
   void bus.emit("calculator:change", { service: input.service, total: estimate.total });
+  void bus.emit("eco:calculate", {
+    service: input.service,
+    carbonGrams: eco.carbonGrams,
+    savedCarbonGrams: eco.savedCarbonGrams
+  });
 }
 
 /**
- * Copies the shareable trip link to the clipboard, with a fallback that
- * selects the address bar for manual copying.
+ * Shares the configured trip via the native Web Share API where supported,
+ * falling back cleanly to the Clipboard API.
  */
 async function shareTrip(form: HTMLFormElement): Promise<void> {
-  const url = `${window.location.origin}${window.location.pathname}${tripToSearch(readForm(form))}`;
+  const trip = readForm(form);
+  const estimate = estimateFare(trip);
+  const url = `${window.location.origin}${window.location.pathname}${tripToSearch(trip)}`;
+  const shareTitle = "برآورد کرایه سفر با تپسی";
+  const shareText = `سفر ${trip.distanceKm} کیلومتری با تپسی: ${formatToman(estimate.total)} تومان`;
+
+  haptics.play("success");
+
+  if (typeof navigator !== "undefined" && "share" in navigator) {
+    try {
+      await navigator.share({
+        title: shareTitle,
+        text: shareText,
+        url
+      });
+      stateMachine.send({ type: "TRIP_SHARED", via: "share_api" });
+      void bus.emit("trip:share", { ok: true, via: "clipboard" });
+      return;
+    } catch {
+      // User cancelled share or aborted; fall through to clipboard
+    }
+  }
 
   try {
     await navigator.clipboard.writeText(url);
+    stateMachine.send({ type: "TRIP_SHARED", via: "clipboard" });
     void bus.emit("trip:share", { ok: true, via: "clipboard" });
   } catch {
-    // Clipboard unavailable (insecure context, permission denied, old
-    // browser): the URL is already in the address bar via syncUrl(), so
-    // point the visitor there instead of failing silently.
+    stateMachine.send({ type: "TRIP_SHARED", via: "clipboard" });
     void bus.emit("trip:share", { ok: true, via: "fallback" });
   }
 }
@@ -246,8 +273,7 @@ export function init(): void {
   const form = document.getElementById("fare-form") as HTMLFormElement | null;
   if (!form) return;
 
-  // Precedence: a shared URL wins over local storage — that is what makes
-  // "send me your trip setup" links behave exactly as sent.
+  // Precedence: shared URL query string overrides saved storage
   let restored = false;
   if (window.location.search) {
     restored = applyTrip(form, parseTripSearch(window.location.search));
@@ -262,20 +288,37 @@ export function init(): void {
   });
 
   let frame: number | null = null;
-  const schedule = () => {
+  const schedule = (playCue = false) => {
+    if (playCue) {
+      haptics.play("tick");
+    }
     if (frame !== null) return;
     frame = requestAnimationFrame(() => {
       frame = null;
       try {
         render(form);
       } catch (error) {
-        console.error("calculator render failed", error);
+        console.error("[calculator] render failed", error);
       }
     });
   };
 
-  form.addEventListener("input", schedule);
-  form.addEventListener("change", schedule);
+  form.addEventListener("input", (e) => {
+    const target = e.target as HTMLElement;
+    const isSlider = target instanceof HTMLInputElement && target.type === "range";
+    schedule(isSlider);
+  });
+
+  form.addEventListener("change", () => schedule(false));
+
+  // Listen to remote changes from other browser tabs
+  crossTabSync.subscribe<Trip>("calculator:sync", (incomingTrip) => {
+    if (incomingTrip && typeof incomingTrip === "object") {
+      applyTrip(form, incomingTrip);
+      schedule(false);
+    }
+  });
+
   render(form);
 
   if (restored) {
